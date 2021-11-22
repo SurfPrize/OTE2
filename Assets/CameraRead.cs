@@ -7,8 +7,9 @@ public class CameraRead : MonoBehaviour
 {
 
     public RawImage img;
-    public WebCamTexture webcam;
+    private WebCamTexture webcam;
     public Dropdown devicesDropdown;
+    public RawImage result;
 
     private WebCamDevice device;
     public bool webcamvalid = false;
@@ -20,7 +21,10 @@ public class CameraRead : MonoBehaviour
         WebCamDevice[] devices = WebCamTexture.devices;
 
         if (devices.Length == 0)
+        {
             webcamvalid = false;
+            Debug.LogWarning("No cameras detected");
+        }
         else
         {
             webcamvalid = true;
@@ -47,9 +51,37 @@ public class CameraRead : MonoBehaviour
         webcamvalid = true;
         webcam.deviceName = selectedCmera;
 
+        webcam = new WebCamTexture(640, 480, 30);
         img.texture = webcam;
         webcam.Play();
 
 
+    }
+
+    void ProcessCameraImage()
+    {
+        Texture2D frame = new Texture2D(img.texture.width, img.texture.height);
+        Vector2 framesize = new Vector2(img.texture.width, img.texture.height);
+
+        for (int y = 0; y < framesize.y; y++)
+        {
+            for (int x = 0; x < framesize.x; x++)
+            {
+                frame.SetPixel(x, y, webcam.GetPixel(x, y));
+            }
+        }
+
+
+        result.texture = frame;
+
+
+    }
+
+    private void Update()
+    {
+        if (webcamvalid)
+        {
+            ProcessCameraImage();
+        }
     }
 }

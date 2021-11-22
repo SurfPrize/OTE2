@@ -10,7 +10,7 @@ public class CameraRead : MonoBehaviour
     private WebCamTexture webcam;
     public Dropdown devicesDropdown;
     public RawImage result;
-
+    private Texture2D frame;
     private WebCamDevice device;
     public bool webcamvalid = false;
     // Start is called before the first frame update
@@ -60,20 +60,19 @@ public class CameraRead : MonoBehaviour
 
     void ProcessCameraImage()
     {
-        Texture2D frame = new Texture2D(img.texture.width, img.texture.height);
+        frame = new Texture2D(img.texture.width, img.texture.height);
         Vector2 framesize = new Vector2(img.texture.width, img.texture.height);
 
-        for (int y = 0; y < framesize.y; y++)
-        {
-            for (int x = 0; x < framesize.x; x++)
-            {
-                frame.SetPixel(x, y, webcam.GetPixel(x, y));
-            }
-        }
+        //for (int y = 0; y < framesize.y; y++)
+        //{
+        //    for (int x = 0; x < framesize.x; x++)
+        //    {
+        //        frame.SetPixel(x, y, webcam.GetPixel(x, y));
+        //    }
+        //}
 
-
+        frame.SetPixels(webcam.GetPixels());
         result.texture = frame;
-
 
     }
 

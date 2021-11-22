@@ -4,25 +4,31 @@ using UnityEngine;
 
 public class ScoreSystem : MonoBehaviour
 {
+    // Player points
+    private int player;
+    // Script para definir o valor das borboletas
+    public int pontos, tipo;
+    
     // Start is called before the first frame update
     void Start()
     {
-        int laranja, azul, castanho, roxo, current, maximum;
 
-        current = 0;
-        maximum = 255;
-        laranja = 1;
-        azul = laranja * 10;
-        castanho = laranja--;
-        roxo = (current / maximum) * 100;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (true)
-        {
 
-        }
+    }
+    // Method que adiciona pontos
+    void AddPoints()
+    {
+        player += pontos;
+    }
+    // Method que pega o tipo de borboleta e retorna o valor delas
+    void ButterflyType()
+    {
+
+        //return tipo;
     }
 }

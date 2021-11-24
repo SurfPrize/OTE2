@@ -10,13 +10,15 @@ public class CameraRead : MonoBehaviour
     private WebCamTexture webcam;
     public Dropdown devicesDropdown;
     public RawImage result;
+    public RawImage result2;
     private Texture2D frame;
+    private Texture2D frame2;
     private WebCamDevice device;
     public bool webcamvalid = false;
     // Start is called before the first frame update
     void Start()
     {
-
+        webcam = new WebCamTexture();
 
         WebCamDevice[] devices = WebCamTexture.devices;
 
@@ -36,6 +38,9 @@ public class CameraRead : MonoBehaviour
 
             }
         }
+
+
+        frame2 = new Texture2D(img.texture.width, img.texture.height);
     }
     void InitializeCamera()
     {
@@ -43,11 +48,10 @@ public class CameraRead : MonoBehaviour
 
     }
 
-    // Update is called once per frame
     public void StartCamera(Dropdown cameraoptions)
     {
         string selectedCmera = cameraoptions.options[cameraoptions.value].text;
-
+        Debug.Log(selectedCmera);
         webcamvalid = true;
         webcam.deviceName = selectedCmera;
 
@@ -63,22 +67,31 @@ public class CameraRead : MonoBehaviour
         frame = new Texture2D(img.texture.width, img.texture.height);
         Vector2 framesize = new Vector2(img.texture.width, img.texture.height);
 
-        //for (int y = 0; y < framesize.y; y++)
-        //{
-        //    for (int x = 0; x < framesize.x; x++)
-        //    {
-        //        frame.SetPixel(x, y, webcam.GetPixel(x, y));
-        //    }
-        //}
-
         frame.SetPixels(webcam.GetPixels());
-        result.texture = frame;
+        frame.Apply();
 
+        Color[] col;
+        col = webcam.GetPixels();
+        for (int y = 0; y < framesize.y; y++)
+        {
+            for (int x = 0; x < framesize.x; x++)
+            {
+                col[(int)framesize.x * y + x] = new Color(col[(int)framesize.x * y + x].r,
+                    col[(int)framesize.x * y + x].r,
+                    col[(int)framesize.x * y + x].r);
+
+            }
+        }
+
+        frame2.SetPixels(col);
+        frame2.Apply();
+        result.texture = frame;
+        result2.texture = frame2;
     }
 
     private void Update()
     {
-        if (webcamvalid)
+        if (webcamvalid == true && webcam != null)
         {
             ProcessCameraImage();
         }

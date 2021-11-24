@@ -5,25 +5,28 @@ using UnityEngine;
 public class ScoreSystem : MonoBehaviour
 {
     // Player points
-    private int player;
-    // Script para definir o valor das borboletas
-    public int pontos, tipo;
+    PlayerPoints pp;
     
     // Start is called before the first frame update
     void Start()
     {
-
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        //Um if, se o jogador pegar uma borboleta que dá pontos, addpoints inicia
+            //AddPoints();
     }
     // Method que adiciona pontos
-    void AddPoints()
+    void AddPoints(int pontos)
     {
-        player += pontos;
+        pp.playerPoints += pontos;
+    }
+    void PercentagePoints(float percentage)
+    {
+        pp.playerPoints *=(int)(1f - percentage);
     }
     // Method que pega o tipo de borboleta e retorna o valor delas
     void ButterflyType()

@@ -17,7 +17,13 @@ public class ScoreSystem : MonoBehaviour
     void Update()
     {
         //Um if, se o jogador pegar uma borboleta que dá pontos, addpoints inicia
-            //AddPoints();
+        //Provavelmente quando pegas a borboleta, usas o botão esquerdo do rato
+        /*
+        if (Input.GetMouseButtonDown(1)) 
+        {
+            AddPoints();
+        }
+        */
     }
     // Method que adiciona pontos
     void AddPoints(int pontos)

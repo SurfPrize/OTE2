@@ -16,6 +16,13 @@ public class CameraRead : MonoBehaviour
     private Texture2D frame2;
     private WebCamDevice device;
     public bool webcamvalid = false;
+    public float mint = 70;
+    public int edges = 10;
+    public float clow = 15;
+    public float chigh = 150;
+    public double minarea = 10;
+    public double maxarea;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -72,40 +79,56 @@ public class CameraRead : MonoBehaviour
 
         Mat col = OpenCvSharp.Unity.TextureToMat(webcam);
 
-        //Color[] col;
-        //col = webcam.GetPixels();
+        //Color[] coll;
+        //coll = webcam.GetPixels();
         //for (int y = 0; y < framesize.y; y++)
         //{
         //    for (int x = 0; x < framesize.x; x++)
         //    {
-        //        col[(int)framesize.x * y + x] = new Color(col[(int)framesize.x * y + x].r, col[(int)framesize.x * y + x].r, col[(int)framesize.x * y + x].r);
+        //        coll[(int)framesize.x * y + x] = new Color(coll[(int)framesize.x * y + x].r, coll[(int)framesize.x * y + x].r, coll[(int)framesize.x * y + x].r);
 
         //    }
         //}
         Mat gray = new Mat();
         Cv2.CvtColor(col, gray, ColorConversionCodes.BGR2GRAY);
 
+        Mat canny = new Mat();
 
+        Cv2.Canny(gray, canny, clow, chigh);
         Mat res = new Mat();
-        Cv2.Threshold(gray, res, 70, 255.0, ThresholdTypes.Binary);
-        //var kernel = Cv2.GetStructuringElement(MorphShapes.Ellipse, new Size(20, 20));
-        //Mat morph = new Mat();
-        //Cv2.MorphologyEx(res, morph, MorphTypes.Close, kernel);
+        Cv2.Threshold(gray, res, mint, 255, ThresholdTypes.Triangle);
+        var kernel = Cv2.GetStructuringElement(MorphShapes.Ellipse, new Size(20, 20));
+        Mat morph = new Mat();
+        Cv2.MorphologyEx(res, morph, MorphTypes.Close, kernel);
 
-        Mat erode = new Mat();
-        Cv2.Erode(res, erode, new Mat(), null, 30);
 
         Mat dil = new Mat();
-        Cv2.Dilate(erode, dil, new Mat(), null, 30);
+        Cv2.Dilate(canny, dil, new Mat(), null, edges);
+
+        Mat erode = new Mat();
+        Cv2.Erode(dil, erode, new Mat(), null, edges);
+
+
+        HierarchyIndex[] h;
+        Point[][] contours = Cv2.FindContoursAsArray(erode, RetrievalModes.List, ContourApproximationModes.ApproxSimple);
+
+        //Mat contours = new Mat();
+        //contours= Cv2.FindContoursAsMat(dil, RetrievalModes.List, ContourApproximationModes.ApproxSimple)[1];
 
 
 
+        Mat finalblend = new Mat();
 
-
-
+        for (int i = 0; i < contours.Length; i++)
+        {
+            if (Cv2.ContourArea(contours[i]) > minarea && Cv2.ContourArea(contours[i]) < maxarea)
+                Cv2.FillConvexPoly(gray, contours[i], Scalar.White);
+        }
+        Cv2.Multiply(gray, morph, finalblend);
+        Debug.Log(contours.Length);
         frame.SetPixels(webcam.GetPixels());
         frame.Apply();
-        frame2 = OpenCvSharp.Unity.MatToTexture(dil);
+        frame2 = OpenCvSharp.Unity.MatToTexture(gray);
         frame2.Apply();
         result.texture = frame;
         result2.texture = frame2;

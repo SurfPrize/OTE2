@@ -68,8 +68,7 @@ public class CameraRead : MonoBehaviour
         frame2 = new Texture2D(img.texture.width, img.texture.height);
         Vector2 framesize = new Vector2(img.texture.width, img.texture.height);
 
-        frame.SetPixels(webcam.GetPixels());
-        frame.Apply();
+
 
         Mat col = OpenCvSharp.Unity.TextureToMat(webcam);
 
@@ -88,8 +87,25 @@ public class CameraRead : MonoBehaviour
 
 
         Mat res = new Mat();
-        Cv2.Threshold(gray, res, 70.0, 255.0, ThresholdTypes.Binary);
-        frame2 = OpenCvSharp.Unity.MatToTexture(res);
+        Cv2.Threshold(gray, res, 70, 255.0, ThresholdTypes.Binary);
+        //var kernel = Cv2.GetStructuringElement(MorphShapes.Ellipse, new Size(20, 20));
+        //Mat morph = new Mat();
+        //Cv2.MorphologyEx(res, morph, MorphTypes.Close, kernel);
+
+        Mat erode = new Mat();
+        Cv2.Erode(res, erode, new Mat(), null, 30);
+
+        Mat dil = new Mat();
+        Cv2.Dilate(erode, dil, new Mat(), null, 30);
+
+
+
+
+
+
+        frame.SetPixels(webcam.GetPixels());
+        frame.Apply();
+        frame2 = OpenCvSharp.Unity.MatToTexture(dil);
         frame2.Apply();
         result.texture = frame;
         result2.texture = frame2;

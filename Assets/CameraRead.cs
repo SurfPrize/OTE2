@@ -20,8 +20,8 @@ public class CameraRead : MonoBehaviour
     public int edges = 10;
     public float clow = 15;
     public float chigh = 150;
-    public double minarea = 10;
-    public double maxarea;
+    public double minarea = 4000;
+    public double maxarea= 8000;
 
     // Start is called before the first frame update
     void Start()
@@ -95,11 +95,11 @@ public class CameraRead : MonoBehaviour
         Mat canny = new Mat();
 
         Cv2.Canny(gray, canny, clow, chigh);
-        Mat res = new Mat();
-        Cv2.Threshold(gray, res, mint, 255, ThresholdTypes.Triangle);
-        var kernel = Cv2.GetStructuringElement(MorphShapes.Ellipse, new Size(20, 20));
-        Mat morph = new Mat();
-        Cv2.MorphologyEx(res, morph, MorphTypes.Close, kernel);
+        //Mat res = new Mat();
+        //Cv2.Threshold(gray, res, mint, 255, ThresholdTypes.Triangle);
+        //var kernel = Cv2.GetStructuringElement(MorphShapes.Ellipse, new Size(20, 20));
+        //Mat morph = new Mat();
+        //Cv2.MorphologyEx(res, morph, MorphTypes.Close, kernel);
 
 
         Mat dil = new Mat();
@@ -117,18 +117,24 @@ public class CameraRead : MonoBehaviour
 
 
 
-        Mat finalblend = new Mat();
 
         for (int i = 0; i < contours.Length; i++)
         {
             if (Cv2.ContourArea(contours[i]) > minarea && Cv2.ContourArea(contours[i]) < maxarea)
                 Cv2.FillConvexPoly(gray, contours[i], Scalar.White);
         }
-        Cv2.Multiply(gray, morph, finalblend);
+
+        Mat thr = new Mat();
+        Cv2.Threshold(gray, thr, mint, 255, ThresholdTypes.Binary);
+        Mat err = new Mat();
+        Cv2.Erode(thr, err, new Mat(), null, edges);
+        Cv2.Dilate(err, err, new Mat(), null, edges);
+
+
         Debug.Log(contours.Length);
         frame.SetPixels(webcam.GetPixels());
         frame.Apply();
-        frame2 = OpenCvSharp.Unity.MatToTexture(gray);
+        frame2 = OpenCvSharp.Unity.MatToTexture(err);
         frame2.Apply();
         result.texture = frame;
         result2.texture = frame2;

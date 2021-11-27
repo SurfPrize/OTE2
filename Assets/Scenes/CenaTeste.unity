@@ -1326,6 +1326,12 @@ MonoBehaviour:
   result: {fileID: 1358344337}
   result2: {fileID: 469110182}
   webcamvalid: 0
+  mint: 70
+  edges: 30
+  clow: 15
+  chigh: 150
+  minarea: 4000
+  maxarea: 8000
 --- !u!114 &1358344337
 MonoBehaviour:
   m_ObjectHideFlags: 0

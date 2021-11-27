@@ -77,13 +77,18 @@ namespace OpenCvSharp {
 			public static readonly TextureConversionParams Default = new TextureConversionParams() { FlipVertically = false, FlipHorizontally = false, RotationAngle = 0 };
 		}
 
-		/// <summary>
-		/// Converts Unity Texture2D to OpenCV Mat
-		/// </summary>
-		/// <returns>New mat</returns>
-		/// <param name="texture">Unity texture</param>
-		/// <param name="parameters">Conversion parameters</param>
-		public static Mat TextureToMat(Texture2D texture, TextureConversionParams parameters = null)
+        internal static Mat TextureToMat(WebCamTexture webcam, object textureParameters)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Converts Unity Texture2D to OpenCV Mat
+        /// </summary>
+        /// <returns>New mat</returns>
+        /// <param name="texture">Unity texture</param>
+        /// <param name="parameters">Conversion parameters</param>
+        public static Mat TextureToMat(Texture2D texture, TextureConversionParams parameters = null)
 		{
 			if (null == parameters)
 				parameters = TextureConversionParams.Default;

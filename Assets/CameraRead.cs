@@ -21,8 +21,9 @@ public class CameraRead : MonoBehaviour
     public float clow = 15;
     public float chigh = 150;
     public double minarea = 4000;
-    public double maxarea= 8000;
-
+    public double maxarea = 8000;
+    public GameObject test;
+    private List<GameObject> tests = new List<GameObject>();
     // Start is called before the first frame update
     void Start()
     {
@@ -65,7 +66,10 @@ public class CameraRead : MonoBehaviour
         webcam = new WebCamTexture(640, 480, 30);
         img.texture = webcam;
         webcam.Play();
-
+        for (int i = 0; i < 20; i++)
+        {
+            tests.Add(Instantiate(test));
+        }
 
     }
 
@@ -109,20 +113,25 @@ public class CameraRead : MonoBehaviour
         Cv2.Erode(dil, erode, new Mat(), null, edges);
 
 
-        HierarchyIndex[] h;
         Point[][] contours = Cv2.FindContoursAsArray(erode, RetrievalModes.List, ContourApproximationModes.ApproxSimple);
 
         //Mat contours = new Mat();
         //contours= Cv2.FindContoursAsMat(dil, RetrievalModes.List, ContourApproximationModes.ApproxSimple)[1];
 
-
+        for (int i = 0; i < tests.Count; i++)
+        {
+            tests[i].SetActive(false);
+        }
 
 
         for (int i = 0; i < contours.Length; i++)
         {
             if (Cv2.ContourArea(contours[i]) > minarea && Cv2.ContourArea(contours[i]) < maxarea)
+            {
                 Cv2.FillConvexPoly(gray, contours[i], Scalar.White);
+            }
         }
+
 
         Mat thr = new Mat();
         Cv2.Threshold(gray, thr, mint, 255, ThresholdTypes.Binary);
@@ -130,8 +139,19 @@ public class CameraRead : MonoBehaviour
         Cv2.Erode(thr, err, new Mat(), null, edges);
         Cv2.Dilate(err, err, new Mat(), null, edges);
 
+        Point[][] contourss = Cv2.FindContoursAsArray(err, RetrievalModes.Tree, ContourApproximationModes.ApproxNone);
 
-        Debug.Log(contours.Length);
+        for (int i = 0; i < contourss.Length; i++)
+        {
+            if (Cv2.ContourArea(contourss[i]) > minarea && Cv2.ContourArea(contourss[i]) < maxarea)
+            {
+                var M = Cv2.Moments(contourss[i]);
+                Debug.Log((int)M.M01 / M.M00 + " " + (int)M.M10 / M.M00);
+                tests[i].SetActive(true);
+                tests[i].transform.position = new Vector2((float)(M.M10 / M.M00), (float)(M.M01 / M.M00));
+            }
+        }
+
         frame.SetPixels(webcam.GetPixels());
         frame.Apply();
         frame2 = OpenCvSharp.Unity.MatToTexture(err);

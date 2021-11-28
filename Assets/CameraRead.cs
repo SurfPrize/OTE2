@@ -66,7 +66,7 @@ public class CameraRead : MonoBehaviour
         webcam = new WebCamTexture(640, 480, 30);
         img.texture = webcam;
         webcam.Play();
-        for (int i = 0; i < 20; i++)
+        for (int i = 0; i < 50; i++)
         {
             tests.Add(Instantiate(test));
         }
@@ -82,6 +82,7 @@ public class CameraRead : MonoBehaviour
 
 
         Mat col = OpenCvSharp.Unity.TextureToMat(webcam);
+        Cv2.Flip(col, col, FlipMode.Y);
 
         //Color[] coll;
         //coll = webcam.GetPixels();
@@ -112,8 +113,10 @@ public class CameraRead : MonoBehaviour
         Mat erode = new Mat();
         Cv2.Erode(dil, erode, new Mat(), null, edges);
 
+        Cv2.Add(erode, gray, erode, gray, -2);
 
-        Point[][] contours = Cv2.FindContoursAsArray(erode, RetrievalModes.List, ContourApproximationModes.ApproxSimple);
+        //Cv2.Threshold(erode, erode, mint, 255, ThresholdTypes.Binary);
+        Point[][] contours = Cv2.FindContoursAsArray(erode, RetrievalModes.List, ContourApproximationModes.ApproxTC89KCOS);
 
         //Mat contours = new Mat();
         //contours= Cv2.FindContoursAsMat(dil, RetrievalModes.List, ContourApproximationModes.ApproxSimple)[1];
@@ -124,31 +127,42 @@ public class CameraRead : MonoBehaviour
         }
 
 
+
         for (int i = 0; i < contours.Length; i++)
         {
             if (Cv2.ContourArea(contours[i]) > minarea && Cv2.ContourArea(contours[i]) < maxarea)
             {
-                Cv2.FillConvexPoly(gray, contours[i], Scalar.White);
+                Cv2.FillConvexPoly(dil, contours[i], Scalar.Red);
+                //var M = Cv2.Moments(contours[i]);
+                //Debug.Log((int)M.M01 / M.M00 + " " + (int)M.M10 / M.M00);
+                //if (tests.Count > i)
+                //{
+                //    tests[i].SetActive(true);
+                //    tests[i].transform.position = new Vector2((float)(M.M10 / M.M00), (float)(M.M01 / M.M00));
+                //}
             }
         }
 
 
-        Mat thr = new Mat();
-        Cv2.Threshold(gray, thr, mint, 255, ThresholdTypes.Binary);
         Mat err = new Mat();
-        Cv2.Erode(thr, err, new Mat(), null, edges);
+        Cv2.Erode(gray, err, new Mat(), null, edges);
         Cv2.Dilate(err, err, new Mat(), null, edges);
+        Cv2.Threshold(err, err, mint, 255, ThresholdTypes.Binary);
 
-        Point[][] contourss = Cv2.FindContoursAsArray(err, RetrievalModes.Tree, ContourApproximationModes.ApproxNone);
+        Point[][] contourss = Cv2.FindContoursAsArray(err, RetrievalModes.List, ContourApproximationModes.ApproxTC89KCOS);
 
         for (int i = 0; i < contourss.Length; i++)
         {
             if (Cv2.ContourArea(contourss[i]) > minarea && Cv2.ContourArea(contourss[i]) < maxarea)
             {
+                Cv2.FillConvexPoly(err, contours[i], Scalar.Red);
                 var M = Cv2.Moments(contourss[i]);
                 Debug.Log((int)M.M01 / M.M00 + " " + (int)M.M10 / M.M00);
-                tests[i].SetActive(true);
-                tests[i].transform.position = new Vector2((float)(M.M10 / M.M00), (float)(M.M01 / M.M00));
+                if (tests.Count > i)
+                {
+                    tests[i].SetActive(true);
+                    tests[i].transform.position = new Vector2((float)(M.M10 / M.M00), (float)(M.M01 / M.M00));
+                }
             }
         }
 

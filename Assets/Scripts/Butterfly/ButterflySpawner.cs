@@ -7,6 +7,7 @@ public class ButterflySpawner : MonoBehaviour
     public GameObject[] butterfly;
     public float spawnRate;
     public int maxButterfliesOnScreen;
+    public bool spawnLeft;
     private float timeToSpawn;
     public float spawnRadius;
     private int nrButterfliesOnScreen;
@@ -38,6 +39,15 @@ public class ButterflySpawner : MonoBehaviour
                     new Vector2(transform.position.x, transform.position.y + Random.Range(-spawnRadius, spawnRadius)),
                     transform.rotation
                     ) ;
+                ButterflyBehaviour butterflyBehaviour = butterflySpawn.GetComponent<ButterflyBehaviour>();
+                if (spawnLeft)
+                {
+                    butterflyBehaviour.spawnDir = Vector2.left;
+                }
+                else
+                {
+                    butterflyBehaviour.spawnDir = Vector2.right;
+                }
             }
         }
         timeToSpawn = spawnRate;

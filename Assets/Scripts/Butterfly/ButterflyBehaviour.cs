@@ -24,12 +24,11 @@ public class ButterflyBehaviour : MonoBehaviour
 
     void Start()
     {
-        
         timeForNextReaction = Random.Range(maxReactionTime,minReactionTime);
         currentFlapWingTime = flapWingTime;
-        direction = Vector2.left;
+        //direction = Vector2.left;
+        direction = spawnDir;
         state = States.Glide;
-        
     }
     void Update()
     {

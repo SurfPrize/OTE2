@@ -2,37 +2,45 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+enum States{
+    Glide,
+    FlapWings,
+    OffCamera
+};
 public class ButterflyBehaviour : MonoBehaviour
 {
     public float fallSpeed;
     public float glideSpeed;
     public float upSpeed;
-    public float reactionTime;
+    public float maxReactionTime;
+    public float minReactionTime;
     public float flapWingTime;
     [HideInInspector] public Vector2 spawnDir;
     private float timeForNextReaction;
     private float currentFlapWingTime;
-    private int state;
+    //private int state;
+    private States state;
     private Vector2 direction;
-    //DIRECTION
-    // 
+
     void Start()
     {
-        timeForNextReaction = reactionTime;
+        
+        timeForNextReaction = Random.Range(maxReactionTime,minReactionTime);
         currentFlapWingTime = flapWingTime;
         direction = Vector2.left;
-        state = 1;
+        state = States.Glide;
+        
     }
     void Update()
     {
         switch (state)
         {
-            case 1:
+            case States.Glide:
                 //gliding
                 transform.Translate((Vector2.down * Time.deltaTime * fallSpeed) + (direction * Time.deltaTime * glideSpeed));
                 ChangeState();
                 break;
-            case 2:
+            case States.FlapWings:
                 //flap wings
                 ChangeDir();
                 transform.Translate(Vector2.up * Time.deltaTime * upSpeed);
@@ -43,24 +51,36 @@ public class ButterflyBehaviour : MonoBehaviour
                 else
                 {
                     currentFlapWingTime = flapWingTime;
-                    state = 1;
+                    state = States.Glide;
                 }
                 break;
             default:
                 Debug.Log("Wrong number");
                 break;
         }
+        //OnCamera();
     }
     private void ChangeState()
     {
+        int stateId;
         if (timeForNextReaction > 0)
         {
             timeForNextReaction -= Time.deltaTime;
         }
         else {
-            state = Random.Range(1, 3);
+            OnCameraCheck();
+            stateId = Random.Range(1, 3);
+            switch (stateId)
+            {
+                case 1:
+                    state = States.Glide;
+                    break;
+                case 2:
+                    state = States.FlapWings;
+                    break;
+            }
             //Debug.Log("state: " + state);
-            timeForNextReaction = reactionTime;
+            timeForNextReaction = Random.Range(maxReactionTime, minReactionTime);
         }
     }
     private void ChangeDir()
@@ -72,6 +92,13 @@ public class ButterflyBehaviour : MonoBehaviour
         else
         {
             direction = Vector2.left;
+        }
+    }
+    void OnCameraCheck()
+    {
+        if (!GetComponent<Renderer>().isVisible)
+        {
+            Destroy(gameObject);
         }
     }
 }

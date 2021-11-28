@@ -24,6 +24,8 @@ public class CameraRead : MonoBehaviour
     public double maxarea = 8000;
     public GameObject test;
     private List<GameObject> tests = new List<GameObject>();
+
+    private Mat gray;
     // Start is called before the first frame update
     void Start()
     {
@@ -48,12 +50,7 @@ public class CameraRead : MonoBehaviour
         }
 
 
-
-    }
-    void InitializeCamera()
-    {
-
-
+        gray = new Mat();
     }
 
     public void StartCamera(Dropdown cameraoptions)
@@ -81,8 +78,8 @@ public class CameraRead : MonoBehaviour
 
 
 
-        Mat col = OpenCvSharp.Unity.TextureToMat(webcam);
-        Cv2.Flip(col, col, FlipMode.Y);
+        gray = OpenCvSharp.Unity.TextureToMat(webcam);
+        Cv2.Flip(gray, gray, FlipMode.Y);
 
         //Color[] coll;
         //coll = webcam.GetPixels();
@@ -94,12 +91,12 @@ public class CameraRead : MonoBehaviour
 
         //    }
         //}
-        Mat gray = new Mat();
-        Cv2.CvtColor(col, gray, ColorConversionCodes.BGR2GRAY);
 
-        Mat canny = new Mat();
+        Cv2.CvtColor(gray, gray, ColorConversionCodes.BGR2GRAY);
 
-        Cv2.Canny(gray, canny, clow, chigh);
+        //Mat canny = new Mat();
+
+        //Cv2.Canny(gray, canny, clow, chigh);
         //Mat res = new Mat();
         //Cv2.Threshold(gray, res, mint, 255, ThresholdTypes.Triangle);
         //var kernel = Cv2.GetStructuringElement(MorphShapes.Ellipse, new Size(20, 20));
@@ -107,16 +104,16 @@ public class CameraRead : MonoBehaviour
         //Cv2.MorphologyEx(res, morph, MorphTypes.Close, kernel);
 
 
-        Mat dil = new Mat();
-        Cv2.Dilate(canny, dil, new Mat(), null, edges);
+        //Mat dil = new Mat();
+        //Cv2.Dilate(canny, dil, new Mat(), null, edges);
 
-        Mat erode = new Mat();
-        Cv2.Erode(dil, erode, new Mat(), null, edges);
+        //Mat erode = new Mat();
+        //Cv2.Erode(dil, erode, new Mat(), null, edges);
 
-        Cv2.Add(erode, gray, erode, gray, -2);
+        //Cv2.Add(erode, gray, erode, gray, -2);
 
         //Cv2.Threshold(erode, erode, mint, 255, ThresholdTypes.Binary);
-        Point[][] contours = Cv2.FindContoursAsArray(erode, RetrievalModes.List, ContourApproximationModes.ApproxTC89KCOS);
+        //Point[][] contours = Cv2.FindContoursAsArray(erode, RetrievalModes.List, ContourApproximationModes.ApproxTC89KCOS);
 
         //Mat contours = new Mat();
         //contours= Cv2.FindContoursAsMat(dil, RetrievalModes.List, ContourApproximationModes.ApproxSimple)[1];
@@ -128,34 +125,33 @@ public class CameraRead : MonoBehaviour
 
 
 
-        for (int i = 0; i < contours.Length; i++)
-        {
-            if (Cv2.ContourArea(contours[i]) > minarea && Cv2.ContourArea(contours[i]) < maxarea)
-            {
-                Cv2.FillConvexPoly(dil, contours[i], Scalar.Red);
-                //var M = Cv2.Moments(contours[i]);
-                //Debug.Log((int)M.M01 / M.M00 + " " + (int)M.M10 / M.M00);
-                //if (tests.Count > i)
-                //{
-                //    tests[i].SetActive(true);
-                //    tests[i].transform.position = new Vector2((float)(M.M10 / M.M00), (float)(M.M01 / M.M00));
-                //}
-            }
-        }
+        //for (int i = 0; i < contours.Length; i++)
+        //{
+        //    if (Cv2.ContourArea(contours[i]) > minarea && Cv2.ContourArea(contours[i]) < maxarea)
+        //    {
+        //        Cv2.FillConvexPoly(dil, contours[i], Scalar.Red);
+        //        //var M = Cv2.Moments(contours[i]);
+        //        //Debug.Log((int)M.M01 / M.M00 + " " + (int)M.M10 / M.M00);
+        //        //if (tests.Count > i)
+        //        //{
+        //        //    tests[i].SetActive(true);
+        //        //    tests[i].transform.position = new Vector2((float)(M.M10 / M.M00), (float)(M.M01 / M.M00));
+        //        //}
+        //    }
+        //}
 
 
-        Mat err = new Mat();
-        Cv2.Erode(gray, err, new Mat(), null, edges);
-        Cv2.Dilate(err, err, new Mat(), null, edges);
-        Cv2.Threshold(err, err, mint, 255, ThresholdTypes.Binary);
+        Cv2.Erode(gray, gray, new Mat(), null, edges);
+        Cv2.Dilate(gray, gray, new Mat(), null, edges);
+        Cv2.Threshold(gray, gray, mint, 255, ThresholdTypes.Binary);
 
-        Point[][] contourss = Cv2.FindContoursAsArray(err, RetrievalModes.List, ContourApproximationModes.ApproxTC89KCOS);
+        Point[][] contourss = Cv2.FindContoursAsArray(gray, RetrievalModes.List, ContourApproximationModes.ApproxTC89KCOS);
 
         for (int i = 0; i < contourss.Length; i++)
         {
             if (Cv2.ContourArea(contourss[i]) > minarea && Cv2.ContourArea(contourss[i]) < maxarea)
             {
-                Cv2.FillConvexPoly(err, contours[i], Scalar.Red);
+                Cv2.FillConvexPoly(gray, contourss[i], Scalar.Red);
                 var M = Cv2.Moments(contourss[i]);
                 Debug.Log((int)M.M01 / M.M00 + " " + (int)M.M10 / M.M00);
                 if (tests.Count > i)
@@ -168,7 +164,7 @@ public class CameraRead : MonoBehaviour
 
         frame.SetPixels(webcam.GetPixels());
         frame.Apply();
-        frame2 = OpenCvSharp.Unity.MatToTexture(err);
+        frame2 = OpenCvSharp.Unity.MatToTexture(gray);
         frame2.Apply();
         result.texture = frame;
         result2.texture = frame2;

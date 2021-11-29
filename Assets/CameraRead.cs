@@ -24,6 +24,9 @@ public class CameraRead : MonoBehaviour
     public double maxarea = 8000;
     public GameObject test;
     private List<GameObject> tests = new List<GameObject>();
+    private Color[] Initial;
+
+    public float colorfilter=5;
 
     private Mat gray;
     // Start is called before the first frame update
@@ -63,11 +66,18 @@ public class CameraRead : MonoBehaviour
         webcam = new WebCamTexture(640, 480, 30);
         img.texture = webcam;
         webcam.Play();
+        Initial = webcam.GetPixels();
         for (int i = 0; i < 50; i++)
         {
             tests.Add(Instantiate(test));
         }
 
+    }
+
+    public void ResetBack()
+    {
+        if (webcamvalid)
+            Initial = webcam.GetPixels();
     }
 
     void ProcessCameraImage()
@@ -76,10 +86,10 @@ public class CameraRead : MonoBehaviour
         frame2 = new Texture2D(img.texture.width, img.texture.height);
         Vector2 framesize = new Vector2(img.texture.width, img.texture.height);
 
+        frame.SetPixels(webcam.GetPixels());
 
 
-        gray = OpenCvSharp.Unity.TextureToMat(webcam);
-        Cv2.Flip(gray, gray, FlipMode.Y);
+
 
         //Color[] coll;
         //coll = webcam.GetPixels();
@@ -91,9 +101,27 @@ public class CameraRead : MonoBehaviour
 
         //    }
         //}
+        float h, s, v, hi, si, vi;
+        Color[] col = frame.GetPixels();
+        
+        for (int x = 0; x < framesize.y; x++)
+        {
+            for (int y = 0; y < framesize.y; y++)
+            {
+                Color.RGBToHSV(col[y + x], out h, out s, out v);
+                Color.RGBToHSV(Initial[y + x], out hi, out si, out vi);
 
+                if (Mathf.Abs(h - hi) < colorfilter)
+                {
+                    col[(int)framesize.x * y + x] = Color.black;
+                }
+            }
+        }
+        frame.SetPixels(col);
+
+        gray = OpenCvSharp.Unity.TextureToMat(frame);
         Cv2.CvtColor(gray, gray, ColorConversionCodes.BGR2GRAY);
-
+        Cv2.Flip(gray, gray, FlipMode.Y);
         //Mat canny = new Mat();
 
         //Cv2.Canny(gray, canny, clow, chigh);
@@ -162,7 +190,6 @@ public class CameraRead : MonoBehaviour
             }
         }
 
-        frame.SetPixels(webcam.GetPixels());
         frame.Apply();
         frame2 = OpenCvSharp.Unity.MatToTexture(gray);
         frame2.Apply();
@@ -175,6 +202,7 @@ public class CameraRead : MonoBehaviour
         if (webcamvalid == true)
         {
             ProcessCameraImage();
+
         }
     }
 }

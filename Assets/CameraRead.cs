@@ -26,6 +26,8 @@ public class CameraRead : MonoBehaviour
     private List<GameObject> tests = new List<GameObject>();
     private Color[] Initial;
 
+    public float colorfilter=5;
+
     private Mat gray;
     // Start is called before the first frame update
     void Start()
@@ -99,13 +101,16 @@ public class CameraRead : MonoBehaviour
 
         //    }
         //}
-
+        float h, s, v, hi, si, vi;
         Color[] col = frame.GetPixels();
         for (int x = 0; x < framesize.y; x++)
         {
             for (int y = 0; y < framesize.y; y++)
             {
-                if (col[(int)framesize.x * y + x] == Initial[(int)framesize.x * y + x])
+                Color.RGBToHSV(col[(int)framesize.x * y + x], out h, out s, out v);
+                Color.RGBToHSV(Initial[(int)framesize.x * y + x], out hi, out si, out vi);
+
+                if (Mathf.Abs(h - hi) < colorfilter)
                 {
                     col[(int)framesize.x * y + x] = Color.black;
                 }

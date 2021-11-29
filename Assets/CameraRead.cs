@@ -103,6 +103,7 @@ public class CameraRead : MonoBehaviour
         //}
         float h, s, v, hi, si, vi;
         Color[] col = frame.GetPixels();
+        
         for (int x = 0; x < framesize.y; x++)
         {
             for (int y = 0; y < framesize.y; y++)
@@ -189,7 +190,6 @@ public class CameraRead : MonoBehaviour
             }
         }
 
-        frame.SetPixels(webcam.GetPixels());
         frame.Apply();
         frame2 = OpenCvSharp.Unity.MatToTexture(gray);
         frame2.Apply();

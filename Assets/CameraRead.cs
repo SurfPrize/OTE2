@@ -108,8 +108,8 @@ public class CameraRead : MonoBehaviour
         {
             for (int y = 0; y < framesize.y; y++)
             {
-                Color.RGBToHSV(col[(int)framesize.x * y + x], out h, out s, out v);
-                Color.RGBToHSV(Initial[(int)framesize.x * y + x], out hi, out si, out vi);
+                Color.RGBToHSV(col[y + x], out h, out s, out v);
+                Color.RGBToHSV(Initial[y + x], out hi, out si, out vi);
 
                 if (Mathf.Abs(h - hi) < colorfilter)
                 {

@@ -26,7 +26,7 @@ public class CameraRead : MonoBehaviour
     private List<GameObject> tests = new List<GameObject>();
     private Color[] Initial;
 
-    public float colorfilter=5;
+    public float colorfilter = 0.3f;
 
     private Mat gray;
     // Start is called before the first frame update
@@ -86,8 +86,6 @@ public class CameraRead : MonoBehaviour
         frame2 = new Texture2D(img.texture.width, img.texture.height);
         Vector2 framesize = new Vector2(img.texture.width, img.texture.height);
 
-        frame.SetPixels(webcam.GetPixels());
-
 
 
 
@@ -101,22 +99,26 @@ public class CameraRead : MonoBehaviour
 
         //    }
         //}
-        float h, s, v, hi, si, vi;
-        Color[] col = frame.GetPixels();
-        
-        for (int x = 0; x < framesize.y; x++)
+
+        float h = 0;
+        float s, v, hi, si, vi;
+
+        Color[] col = webcam.GetPixels();
+
+        for (int x = 0; x < framesize.x; x++)
         {
             for (int y = 0; y < framesize.y; y++)
             {
-                Color.RGBToHSV(col[y + x], out h, out s, out v);
-                Color.RGBToHSV(Initial[y + x], out hi, out si, out vi);
-
-                if (Mathf.Abs(h - hi) < colorfilter)
+                Color.RGBToHSV(col[(int)framesize.x * y + x], out h, out s, out v);
+                Color.RGBToHSV(Initial[(int)framesize.x * y + x], out hi, out si, out vi);
+                if (Mathf.Abs(h - hi) < colorfilter && Mathf.Abs(s - si) < colorfilter)
                 {
                     col[(int)framesize.x * y + x] = Color.black;
                 }
+
             }
         }
+        Debug.Log(h);
         frame.SetPixels(col);
 
         gray = OpenCvSharp.Unity.TextureToMat(frame);

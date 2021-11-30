@@ -17,13 +17,11 @@ public class CameraRead : MonoBehaviour
     private WebCamDevice device;
     public bool webcamvalid = false;
     public float mint = 70;
-    public int edges = 10;
-    public float clow = 15;
-    public float chigh = 150;
-    public double minarea = 4000;
-    public double maxarea = 8000;
-    public GameObject test;
-    private List<GameObject> tests = new List<GameObject>();
+    public int edges = 8;
+    public double minarea = 10;
+    public double maxarea = 90;
+    public GameObject SpawnedCollider;
+    private List<GameObject> ColliderList = new List<GameObject>();
     private Color32[] Initial;
 
     public float colorfilter = 0.97f;
@@ -44,16 +42,12 @@ public class CameraRead : MonoBehaviour
         }
         else
         {
-
             for (int i = 0; i < devices.Length; i++)
             {
                 Dropdown.OptionData thisDevice = new Dropdown.OptionData(devices[i].name);
-
                 devicesDropdown.options.Add(thisDevice);
-
             }
         }
-
 
         gray = new Mat();
     }
@@ -71,7 +65,7 @@ public class CameraRead : MonoBehaviour
         Initial = webcam.GetPixels32();
         for (int i = 0; i < 20; i++)
         {
-            tests.Add(Instantiate(test));
+            ColliderList.Add(Instantiate(SpawnedCollider));
         }
 
     }
@@ -87,10 +81,6 @@ public class CameraRead : MonoBehaviour
         frame = new Texture2D(img.texture.width, img.texture.height);
         frame2 = new Texture2D(img.texture.width, img.texture.height);
         Vector2 framesize = new Vector2(img.texture.width, img.texture.height);
-
-
-
-
         //Color[] coll;
         //coll = webcam.GetPixels();
         //for (int y = 0; y < framesize.y; y++)
@@ -107,10 +97,6 @@ public class CameraRead : MonoBehaviour
         float vi = 0;
         float s, hi, si;
 
-
-
-        
-
         Color32[] col = webcam.GetPixels32();
         for (int x = 0; x < framesize.x; x++)
         {
@@ -124,18 +110,13 @@ public class CameraRead : MonoBehaviour
                 {
                     col[(int)framesize.x * y + x] = Color.black;
                 }
-                else
-                {
-                }
-
             }
         }
 
-        Debug.Log(v - vi);
         frame.SetPixels32(col);
         gray = OpenCvSharp.Unity.TextureToMat(frame);
-        
-        Cv2.Flip(gray, gray, FlipMode.Y);
+
+        Cv2.Flip(gray, gray, FlipMode.XY);
 
         //Mat canny = new Mat();
 
@@ -161,13 +142,10 @@ public class CameraRead : MonoBehaviour
         //Mat contours = new Mat();
         //contours= Cv2.FindContoursAsMat(dil, RetrievalModes.List, ContourApproximationModes.ApproxSimple)[1];
 
-        for (int i = 0; i < tests.Count; i++)
+        for (int i = 0; i < ColliderList.Count; i++)
         {
-            tests[i].SetActive(false);
+            ColliderList[i].SetActive(false);
         }
-
-
-
         //for (int i = 0; i < contours.Length; i++)
         //{
         //    if (Cv2.ContourArea(contours[i]) > minarea && Cv2.ContourArea(contours[i]) < maxarea)
@@ -182,26 +160,29 @@ public class CameraRead : MonoBehaviour
         //        //}
         //    }
         //}
-
-
-        //Cv2.Erode(gray, gray, new Mat(), null, edges);
-        //Cv2.Dilate(gray, gray, new Mat(), null, edges);
-        Cv2.CvtColor(gray, gray, ColorConversionCodes.BGR2GRAY);
+        Cv2.Erode(gray, gray, new Mat(), null, edges);
+        Cv2.Dilate(gray, gray, new Mat(), null, edges);
         Cv2.Threshold(gray, gray, mint, 255, ThresholdTypes.Binary);
-
-        Point[][] contourss = Cv2.FindContoursAsArray(gray, RetrievalModes.List, ContourApproximationModes.ApproxTC89KCOS);
+        Cv2.CvtColor(gray, gray, ColorConversionCodes.BGR2GRAY);
+        Point[][] contourss = Cv2.FindContoursAsArray(gray, RetrievalModes.List, ContourApproximationModes.ApproxNone);
 
         for (int i = 0; i < contourss.Length; i++)
         {
-            if (Cv2.ContourArea(contourss[i]) > minarea && Cv2.ContourArea(contourss[i]) < maxarea)
+            // if (Cv2.ContourArea(contourss[i]) > minarea && Cv2.ContourArea(contourss[i]) < maxarea)
             {
                 Cv2.FillConvexPoly(gray, contourss[i], Scalar.Red);
                 var M = Cv2.Moments(contourss[i]);
                 // Debug.Log((int)M.M01 / M.M00 + " " + (int)M.M10 / M.M00);
-                if (tests.Count > i)
+                if (ColliderList.Count > i)
                 {
-                    tests[i].SetActive(true);
-                    tests[i].transform.position = new Vector2((float)(M.M10 / M.M00), (float)(M.M01 / M.M00));
+                    Vector2 res = new Vector2((float)(M.M10 / M.M00), (float)(M.M01 / M.M00));
+
+                    res = new Vector2(map(res.x, 0, 640, -1000, 1000), map(res.y, 0, 480, -500, 500));
+                    ColliderList[i].SetActive(true);
+                    ColliderList[i].transform.position =  res +
+                         (Vector2.one * Camera.main.transform.position)
+                         //+ (Vector2.left * Camera.main.orthographicSize * 2)
+                         ;
                 }
             }
         }
@@ -212,7 +193,10 @@ public class CameraRead : MonoBehaviour
         result.texture = frame;
         result2.texture = frame2;
     }
-
+    float map(float s, float a1, float a2, float b1, float b2)
+    {
+        return b1 + (s - a1) * (b2 - b1) / (a2 - a1);
+    }
     private void Update()
     {
         if (webcamvalid == true)

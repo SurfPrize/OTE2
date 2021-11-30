@@ -24,11 +24,11 @@ public class CameraRead : MonoBehaviour
     public double maxarea = 8000;
     public GameObject test;
     private List<GameObject> tests = new List<GameObject>();
-    private Color[] Initial;
+    private Color32[] Initial;
 
-    public float colorfilter = 0.3f;
-    public float satfilter = 0.3f;
-    public float vibrancefilter = 0.3f;
+    public float colorfilter = 0.97f;
+    public float satfilter = 0.91f;
+    public float vibrancefilter = 0.2f;
 
     private Mat gray;
     // Start is called before the first frame update
@@ -68,8 +68,8 @@ public class CameraRead : MonoBehaviour
         webcam = new WebCamTexture(640, 480, 24);
         img.texture = webcam;
         webcam.Play();
-        Initial = webcam.GetPixels();
-        for (int i = 0; i < 50; i++)
+        Initial = webcam.GetPixels32();
+        for (int i = 0; i < 20; i++)
         {
             tests.Add(Instantiate(test));
         }
@@ -79,7 +79,7 @@ public class CameraRead : MonoBehaviour
     public void ResetBack()
     {
         if (webcamvalid)
-            Initial = webcam.GetPixels();
+            Initial = webcam.GetPixels32();
     }
 
     void ProcessCameraImage()
@@ -103,10 +103,15 @@ public class CameraRead : MonoBehaviour
         //}
 
         float h = 0;
-        float s, v, hi, si, vi;
+        float v = 0;
+        float vi = 0;
+        float s, hi, si;
 
-        Color[] col = webcam.GetPixels();
 
+
+        
+
+        Color32[] col = webcam.GetPixels32();
         for (int x = 0; x < framesize.x; x++)
         {
             for (int y = 0; y < framesize.y; y++)
@@ -119,16 +124,19 @@ public class CameraRead : MonoBehaviour
                 {
                     col[(int)framesize.x * y + x] = Color.black;
                 }
+                else
+                {
+                }
 
             }
         }
 
-        Debug.Log(h);
-        frame.SetPixels(col);
-
+        Debug.Log(v - vi);
+        frame.SetPixels32(col);
         gray = OpenCvSharp.Unity.TextureToMat(frame);
-        Cv2.CvtColor(gray, gray, ColorConversionCodes.BGR2GRAY);
+        
         Cv2.Flip(gray, gray, FlipMode.Y);
+
         //Mat canny = new Mat();
 
         //Cv2.Canny(gray, canny, clow, chigh);
@@ -176,8 +184,9 @@ public class CameraRead : MonoBehaviour
         //}
 
 
-        Cv2.Erode(gray, gray, new Mat(), null, edges);
-        Cv2.Dilate(gray, gray, new Mat(), null, edges);
+        //Cv2.Erode(gray, gray, new Mat(), null, edges);
+        //Cv2.Dilate(gray, gray, new Mat(), null, edges);
+        Cv2.CvtColor(gray, gray, ColorConversionCodes.BGR2GRAY);
         Cv2.Threshold(gray, gray, mint, 255, ThresholdTypes.Binary);
 
         Point[][] contourss = Cv2.FindContoursAsArray(gray, RetrievalModes.List, ContourApproximationModes.ApproxTC89KCOS);
@@ -188,7 +197,7 @@ public class CameraRead : MonoBehaviour
             {
                 Cv2.FillConvexPoly(gray, contourss[i], Scalar.Red);
                 var M = Cv2.Moments(contourss[i]);
-                Debug.Log((int)M.M01 / M.M00 + " " + (int)M.M10 / M.M00);
+                // Debug.Log((int)M.M01 / M.M00 + " " + (int)M.M10 / M.M00);
                 if (tests.Count > i)
                 {
                     tests[i].SetActive(true);

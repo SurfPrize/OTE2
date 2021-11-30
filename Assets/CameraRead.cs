@@ -27,6 +27,8 @@ public class CameraRead : MonoBehaviour
     private Color[] Initial;
 
     public float colorfilter = 0.3f;
+    public float satfilter = 0.3f;
+    public float vibrancefilter = 0.3f;
 
     private Mat gray;
     // Start is called before the first frame update
@@ -63,7 +65,7 @@ public class CameraRead : MonoBehaviour
         webcamvalid = true;
         webcam.deviceName = selectedCmera;
 
-        webcam = new WebCamTexture(640, 480, 30);
+        webcam = new WebCamTexture(640, 480, 24);
         img.texture = webcam;
         webcam.Play();
         Initial = webcam.GetPixels();
@@ -111,13 +113,16 @@ public class CameraRead : MonoBehaviour
             {
                 Color.RGBToHSV(col[(int)framesize.x * y + x], out h, out s, out v);
                 Color.RGBToHSV(Initial[(int)framesize.x * y + x], out hi, out si, out vi);
-                if (Mathf.Abs(h - hi) < colorfilter && Mathf.Abs(s - si) < colorfilter)
+                if (Mathf.Abs(h - hi) < colorfilter && Mathf.Abs(s - si) < satfilter
+                    && Mathf.Abs(v - vi) < vibrancefilter
+                    )
                 {
                     col[(int)framesize.x * y + x] = Color.black;
                 }
 
             }
         }
+
         Debug.Log(h);
         frame.SetPixels(col);
 

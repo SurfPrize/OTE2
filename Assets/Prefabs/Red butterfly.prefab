@@ -14,10 +14,10 @@ GameObject:
   - component: {fileID: 3150121609270861452}
   - component: {fileID: 3150121609270861490}
   - component: {fileID: 3150121609270861491}
-  - component: {fileID: 3150121609270861489}
+  - component: {fileID: 8333540543907038543}
   m_Layer: 0
-  m_Name: Red butterfly
-  m_TagString: Butterfly
+  m_Name: Red Butterfly
+  m_TagString: Red Butterfly
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -135,7 +135,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: -2.9778008}
@@ -172,7 +172,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &3150121609270861489
+--- !u!114 &8333540543907038543
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -181,7 +181,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 3150121609270861448}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c93bd52bee4f92b468046a38eafd396f, type: 3}
+  m_Script: {fileID: 11500000, guid: 87b00794e2764c54eb884f63d393ccff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pontos: 0

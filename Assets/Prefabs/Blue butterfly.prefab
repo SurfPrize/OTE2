@@ -14,10 +14,10 @@ GameObject:
   - component: {fileID: 5363717805813041615}
   - component: {fileID: 5363717805813041649}
   - component: {fileID: 5363717805813041648}
-  - component: {fileID: 5363717805813041650}
+  - component: {fileID: -3490162198537872853}
   m_Layer: 0
-  m_Name: Blue butterfly
-  m_TagString: Butterfly
+  m_Name: Blue Butterfly
+  m_TagString: Blue Butterfly
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -172,7 +172,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &5363717805813041650
+--- !u!114 &-3490162198537872853
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -181,7 +181,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 5363717805813041611}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c93bd52bee4f92b468046a38eafd396f, type: 3}
+  m_Script: {fileID: 11500000, guid: 87b00794e2764c54eb884f63d393ccff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pontos: 100

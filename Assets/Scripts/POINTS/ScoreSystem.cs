@@ -1,50 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class ScoreSystem : MonoBehaviour
 {
-    // Player points
-    PlayerPoints pp;
-    public int pontos = 4;
-    private GameObject score;
+    public int playerPoint = 0; 
+    public TMP_Text scorePoint;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        score = GameObject.FindGameObjectWithTag("Score");
-        pp = score.GetComponent<PlayerPoints>();
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-    
-    }
-    // Method que adiciona pontos
-    void AddPoints(int pontos)
-    {
-        pp.UIAddPoint(pontos);
-    }
-    void PercentagePoints(float percentage)
-    {
-        pp.playerPoints *= (int)(1f - percentage);
-    }
-    // Method que pega o tipo de borboleta e retorna o valor delas
-    void ButterflyType()
-    {
-
-        //return tipo;
-    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Butterfly")
+        if (collision.gameObject.name == "Orange Butterfly(Clone)")
         {
-            AddPoints(pontos);
-            return;
+            Debug.Log("Detectei a borboleta");
+            AddPoint(1);
+            scorePoint.text = "" + playerPoint;
+            DeleteButterfly();
         }
-        print("BUTTERFLY ELIMINATED");
-        Destroy(gameObject);
+    }
+    public void AddPoint(int pontos)
+    {
+        playerPoint += pontos;
+        Debug.Log("Adicionei um ponto");
+    }
+
+    public void DeleteButterfly()
+    {
+        //Destroy(gameObject);
     }
 }

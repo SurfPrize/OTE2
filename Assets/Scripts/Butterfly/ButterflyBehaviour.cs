@@ -21,7 +21,8 @@ public class ButterflyBehaviour : MonoBehaviour
     //private int state;
     private States state;
     private Vector2 direction;
-
+    private Animator animator;
+    private SpriteRenderer spriteRenderer;
     void Start()
     {
         timeForNextReaction = Random.Range(maxReactionTime,minReactionTime);
@@ -29,6 +30,8 @@ public class ButterflyBehaviour : MonoBehaviour
         //direction = Vector2.left;
         direction = spawnDir;
         state = States.Glide;
+        animator = gameObject.GetComponent<Animator>();
+        spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
     }
     void Update()
     {
@@ -36,12 +39,14 @@ public class ButterflyBehaviour : MonoBehaviour
         {
             case States.Glide:
                 //gliding
+                animator.SetBool("IsWingFlapping", false);
                 transform.Translate((Vector2.down * Time.deltaTime * fallSpeed) + (direction * Time.deltaTime * glideSpeed));
                 ChangeState();
                 break;
             case States.FlapWings:
                 //flap wings
-                ChangeDir();
+                animator.SetBool("IsWingFlapping", true);
+                
                 transform.Translate(Vector2.up * Time.deltaTime * upSpeed);
                 if (currentFlapWingTime > 0)
                 {
@@ -50,6 +55,7 @@ public class ButterflyBehaviour : MonoBehaviour
                 else
                 {
                     currentFlapWingTime = flapWingTime;
+                    ChangeDir();
                     state = States.Glide;
                 }
                 break;
@@ -86,11 +92,17 @@ public class ButterflyBehaviour : MonoBehaviour
     {
         if (Random.value < 0.5f)
         {
+            
             direction = Vector2.right;
+            if (spriteRenderer.flipX)
+                spriteRenderer.flipX = false;
         }
         else
         {
+           
             direction = Vector2.left;
+            if (!spriteRenderer.flipX)
+                spriteRenderer.flipX = true;
         }
     }
     void OnCameraCheck()

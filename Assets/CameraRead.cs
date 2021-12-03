@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class CameraRead : MonoBehaviour
 {
-
+    private Controlos _controls;
     public RawImage img;
     private WebCamTexture webcam;
     public Dropdown devicesDropdown;
@@ -40,7 +40,6 @@ public class CameraRead : MonoBehaviour
             debugMode(value);
         }
     }
-
     public float Colorfilter { get => colorfilter; set => colorfilter = value; }
     public float Satfilter { get => satfilter; set => satfilter = value; }
     public float Vibrancefilter { get => vibrancefilter; set => vibrancefilter = value; }
@@ -48,6 +47,23 @@ public class CameraRead : MonoBehaviour
     public float Minarea { get => minarea; set => minarea = value; }
     public float Maxarea { get => maxarea; set => maxarea = value; }
     public float Edges { get => edges; set => edges = value; }
+    private void Awake()
+    {
+        _controls = new Controlos();
+        _controls.UI.Debug.Enable();
+        _controls.UI.Debug.performed += Debug_performed;
+    }
+
+    private void Debug_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        DebugMode = !DebugMode;
+    }
+    private void OnDisable()
+    {
+
+        _controls.UI.Debug.performed -= Debug_performed;
+        _controls.UI.Debug.Disable();
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -132,7 +148,11 @@ public class CameraRead : MonoBehaviour
         float vi = 0;
         float s, hi, si;
 
-        Color32[] col = webcam.GetPixels32();
+        Mat flip = new Mat();
+        Cv2.Flip(OpenCvSharp.Unity.TextureToMat(webcam), flip, FlipMode.Y);
+
+        frame = OpenCvSharp.Unity.MatToTexture(flip);
+        Color32[] col = frame.GetPixels32();
         for (int x = 0; x < framesize.x; x++)
         {
             for (int y = 0; y < framesize.y; y++)
@@ -149,10 +169,11 @@ public class CameraRead : MonoBehaviour
         }
 
         frame.SetPixels32(col);
-        frame.Apply();
+
         gray = OpenCvSharp.Unity.TextureToMat(frame);
 
-        Cv2.Flip(gray, gray, FlipMode.XY);
+
+        Cv2.Flip(gray, gray, FlipMode.X);
 
         //Mat canny = new Mat();
 
@@ -219,7 +240,9 @@ public class CameraRead : MonoBehaviour
                 }
             }
         }
-        
+
+        frame.Apply();
+
         if (debug)
         {
             frame.Apply();
@@ -232,7 +255,7 @@ public class CameraRead : MonoBehaviour
         else
         {
 
-            
+
             result.texture = frame;
         }
     }

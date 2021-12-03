@@ -1,0 +1,69 @@
+{
+    "name": "Controlos",
+    "maps": [
+        {
+            "name": "UI",
+            "id": "e78a8ed0-11bf-4491-99f9-8fbf9d5aa056",
+            "actions": [
+                {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "b86f1a1d-44c4-4f4a-89f0-1d5e455262d5",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Debug",
+                    "type": "Button",
+                    "id": "3725711a-ad11-42b8-89b1-c00698d5fcc8",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "022f24d3-bbf4-42c3-8b08-2a0c94b87785",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PC",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2ffd9654-6f64-40c3-aa23-b33d76f434a4",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PC",
+                    "action": "Debug",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": [
+        {
+            "name": "PC",
+            "bindingGroup": "PC",
+            "devices": [
+                {
+                    "devicePath": "<Keyboard>",
+                    "isOptional": false,
+                    "isOR": false
+                },
+                {
+                    "devicePath": "<Mouse>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        }
+    ]
+}

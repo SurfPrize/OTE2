@@ -7,15 +7,36 @@ public class MenuScript : MonoBehaviour
 {
     public static bool GameIsPaused = false;
     public GameObject menuDetection;
-    void Update()
+    private Controlos _controls;
+
+    //void Update()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.Escape))
+    //    {
+    //        if (GameIsPaused)
+    //            Resume();
+    //        else
+    //            Pause();
+    //    }
+    //}
+    private void Awake()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (GameIsPaused)
-                Resume();
-            else
-                Pause();
-        }
+        _controls = new Controlos();
+        _controls.UI.Pause.Enable();
+        _controls.UI.Pause.performed += Pause_performed;
+    }
+    private void OnDisable()
+    {
+        _controls.UI.Pause.performed -= Pause_performed;
+        _controls.UI.Pause.Disable();
+    }
+    private void Pause_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        GameIsPaused = !GameIsPaused;
+        if (GameIsPaused)
+            Resume();
+        else
+            Pause();
     }
 
     public void Resume()

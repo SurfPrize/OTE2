@@ -16,19 +16,39 @@ public class CameraRead : MonoBehaviour
     private Texture2D frame2;
     private WebCamDevice device;
     public bool webcamvalid = false;
-    public float mint = 70;
-    public int edges = 8;
-    public double minarea = 10;
-    public double maxarea = 90;
+    private float mint = 70;
+    private float edges = 8;
+    private float minarea = 10;
+    private float maxarea = 90;
     public GameObject SpawnedCollider;
     private List<GameObject> ColliderList = new List<GameObject>();
     private Color32[] Initial;
+    private bool debug = true;
 
-    public float colorfilter = 0.97f;
-    public float satfilter = 0.91f;
-    public float vibrancefilter = 0.2f;
+    private float colorfilter = 0.97f;
+    private float satfilter = 0.91f;
+    private float vibrancefilter = 0.2f;
 
     private Mat gray;
+
+    public bool DebugMode
+    {
+        get => debug;
+        set
+        {
+            debug = value;
+            debugMode(value);
+        }
+    }
+
+    public float Colorfilter { get => colorfilter; set => colorfilter = value; }
+    public float Satfilter { get => satfilter; set => satfilter = value; }
+    public float Vibrancefilter { get => vibrancefilter; set => vibrancefilter = value; }
+    public float Mint { get => mint; set => mint = value; }
+    public float Minarea { get => minarea; set => minarea = value; }
+    public float Maxarea { get => maxarea; set => maxarea = value; }
+    public float Edges { get => edges; set => edges = value; }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -54,12 +74,13 @@ public class CameraRead : MonoBehaviour
 
     public void StartCamera(Dropdown cameraoptions)
     {
+        webcam.Stop();
         string selectedCmera = cameraoptions.options[cameraoptions.value].text;
         Debug.Log(selectedCmera);
         webcamvalid = true;
         webcam.deviceName = selectedCmera;
 
-        webcam = new WebCamTexture(640, 480, 24);
+        webcam = new WebCamTexture(640, 480, 60);
         img.texture = webcam;
         webcam.Play();
         Initial = webcam.GetPixels32();
@@ -75,6 +96,14 @@ public class CameraRead : MonoBehaviour
         if (webcamvalid)
             Initial = webcam.GetPixels32();
     }
+    public void debugMode(bool debugnew)
+    {
+        debug = debugnew;
+        result.gameObject.SetActive(debug);
+        result2.gameObject.SetActive(debug);
+
+    }
+
 
     void ProcessCameraImage()
     {
@@ -91,7 +120,6 @@ public class CameraRead : MonoBehaviour
 
         //    }
         //}
-
         float h = 0;
         float v = 0;
         float vi = 0;
@@ -104,11 +132,11 @@ public class CameraRead : MonoBehaviour
             {
                 Color.RGBToHSV(col[(int)framesize.x * y + x], out h, out s, out v);
                 Color.RGBToHSV(Initial[(int)framesize.x * y + x], out hi, out si, out vi);
-                if (Mathf.Abs(h - hi) < colorfilter && Mathf.Abs(s - si) < satfilter
-                    && Mathf.Abs(v - vi) < vibrancefilter
+                if (Mathf.Abs(h - hi) < Colorfilter && Mathf.Abs(s - si) < Satfilter
+                    && Mathf.Abs(v - vi) < Vibrancefilter
                     )
                 {
-                    col[(int)framesize.x * y + x] = Color.black;
+                    col[(int)framesize.x * y + x] = new Color(0, 0, 0, 0);
                 }
             }
         }
@@ -160,17 +188,16 @@ public class CameraRead : MonoBehaviour
         //        //}
         //    }
         //}
-        Cv2.Erode(gray, gray, new Mat(), null, edges);
-        Cv2.Dilate(gray, gray, new Mat(), null, edges);
-        Cv2.Threshold(gray, gray, mint, 255, ThresholdTypes.Binary);
+        Cv2.Erode(gray, gray, new Mat(), null, (int)Edges);
+        Cv2.Dilate(gray, gray, new Mat(), null, (int)Edges);
+        Cv2.Threshold(gray, gray, Mint, 255, ThresholdTypes.Binary);
         Cv2.CvtColor(gray, gray, ColorConversionCodes.BGR2GRAY);
         Point[][] contourss = Cv2.FindContoursAsArray(gray, RetrievalModes.List, ContourApproximationModes.ApproxNone);
 
         for (int i = 0; i < contourss.Length; i++)
         {
-            // if (Cv2.ContourArea(contourss[i]) > minarea && Cv2.ContourArea(contourss[i]) < maxarea)
+            if (Cv2.ContourArea(contourss[i]) > Minarea && Cv2.ContourArea(contourss[i]) < Maxarea)
             {
-                Cv2.FillConvexPoly(gray, contourss[i], Scalar.Red);
                 var M = Cv2.Moments(contourss[i]);
                 // Debug.Log((int)M.M01 / M.M00 + " " + (int)M.M10 / M.M00);
                 if (ColliderList.Count > i)
@@ -179,19 +206,20 @@ public class CameraRead : MonoBehaviour
 
                     res = new Vector2(map(res.x, 0, 640, -1000, 1000), map(res.y, 0, 480, -500, 500));
                     ColliderList[i].SetActive(true);
-                    ColliderList[i].transform.position =  res +
-                         (Vector2.one * Camera.main.transform.position)
-                         //+ (Vector2.left * Camera.main.orthographicSize * 2)
-                         ;
+                    ColliderList[i].transform.position = res +
+                         (Vector2.one * Camera.main.transform.position);
                 }
             }
         }
-
-        frame.Apply();
-        frame2 = OpenCvSharp.Unity.MatToTexture(gray);
-        frame2.Apply();
-        result.texture = frame;
-        result2.texture = frame2;
+        if (debug)
+        {
+            frame.Apply();
+            Cv2.Flip(gray, gray, FlipMode.XY);
+            frame2 = OpenCvSharp.Unity.MatToTexture(gray);
+            frame2.Apply();
+            result.texture = frame;
+            result2.texture = frame2;
+        }
     }
     float map(float s, float a1, float a2, float b1, float b2)
     {
@@ -202,7 +230,6 @@ public class CameraRead : MonoBehaviour
         if (webcamvalid == true)
         {
             ProcessCameraImage();
-
         }
     }
 }

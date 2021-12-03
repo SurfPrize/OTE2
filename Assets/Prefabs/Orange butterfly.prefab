@@ -14,10 +14,10 @@ GameObject:
   - component: {fileID: 2954561517998177870}
   - component: {fileID: 2954561517998177904}
   - component: {fileID: 2954561517998177905}
-  - component: {fileID: 2954561517998177907}
+  - component: {fileID: 4485859867417345861}
   m_Layer: 0
-  m_Name: Orange butterfly
-  m_TagString: Butterfly
+  m_Name: Orange Butterfly
+  m_TagString: Orange Butterfly
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -172,7 +172,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &2954561517998177907
+--- !u!114 &4485859867417345861
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -181,7 +181,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 2954561517998177866}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c93bd52bee4f92b468046a38eafd396f, type: 3}
+  m_Script: {fileID: 11500000, guid: 87b00794e2764c54eb884f63d393ccff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pontos: 10

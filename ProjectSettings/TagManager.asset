@@ -4,8 +4,12 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Butterfly
   - Score
+  - Red Butterfly
+  - Blue Butterfly
+  - Orange Butterfly
+  - HP
+  - Butterfly
   layers:
   - Default
   - TransparentFX

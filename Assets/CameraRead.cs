@@ -23,7 +23,7 @@ public class CameraRead : MonoBehaviour
     public GameObject SpawnedCollider;
     private List<GameObject> ColliderList = new List<GameObject>();
     private Color32[] Initial;
-    private bool debug = true;
+    private bool debug = false;
 
     private float colorfilter = 0.97f;
     private float satfilter = 0.91f;
@@ -70,6 +70,11 @@ public class CameraRead : MonoBehaviour
         }
 
         gray = new Mat();
+        DebugMode = false;
+        if (!debug)
+        {
+            StartCamera(devicesDropdown);
+        }
     }
 
     public void StartCamera(Dropdown cameraoptions)
@@ -98,10 +103,12 @@ public class CameraRead : MonoBehaviour
     }
     public void debugMode(bool debugnew)
     {
-        debug = debugnew;
-        result.gameObject.SetActive(debug);
-        result2.gameObject.SetActive(debug);
+        for (int i = 0; i < gameObject.transform.childCount; i++)
+        {
+            gameObject.transform.GetChild(i).gameObject.SetActive(debugnew);
 
+        }
+        Debug.Log(gameObject.transform.childCount);
     }
 
 
@@ -142,6 +149,7 @@ public class CameraRead : MonoBehaviour
         }
 
         frame.SetPixels32(col);
+        frame.Apply();
         gray = OpenCvSharp.Unity.TextureToMat(frame);
 
         Cv2.Flip(gray, gray, FlipMode.XY);
@@ -211,14 +219,21 @@ public class CameraRead : MonoBehaviour
                 }
             }
         }
+        
         if (debug)
         {
             frame.Apply();
             Cv2.Flip(gray, gray, FlipMode.XY);
             frame2 = OpenCvSharp.Unity.MatToTexture(gray);
             frame2.Apply();
-            result.texture = frame;
+
             result2.texture = frame2;
+        }
+        else
+        {
+
+            
+            result.texture = frame;
         }
     }
     float map(float s, float a1, float a2, float b1, float b2)

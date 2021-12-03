@@ -136,7 +136,7 @@ public class CameraRead : MonoBehaviour
                     && Mathf.Abs(v - vi) < Vibrancefilter
                     )
                 {
-                    col[(int)framesize.x * y + x] = Color.black;
+                    col[(int)framesize.x * y + x] = new Color(0, 0, 0, 0);
                 }
             }
         }

@@ -36,4 +36,6 @@ public class Score : MonoBehaviour
         scorePoint.text = "Player Points: " + playerPoint;
         Debug.Log("Adicionei um ponto");
     }
+
+
 }

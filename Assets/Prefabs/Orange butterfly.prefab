@@ -16,8 +16,8 @@ GameObject:
   - component: {fileID: 2954561517998177905}
   - component: {fileID: 4485859867417345861}
   m_Layer: 0
-  m_Name: Orange Butterfly
-  m_TagString: Orange Butterfly
+  m_Name: Orange butterfly
+  m_TagString: Butterfly
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

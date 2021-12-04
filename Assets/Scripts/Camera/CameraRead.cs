@@ -16,18 +16,18 @@ public class CameraRead : MonoBehaviour
     private Texture2D frame2;
     private WebCamDevice device;
     public bool webcamvalid = false;
-    private float mint = 70;
-    private float edges = 2;
-    private float minarea = 3;
-    private float maxarea = 90;
+    private static float mint = 70;
+    private static float edges = 2;
+    private static float minarea = 3;
+    private static float maxarea = 90;
     public GameObject SpawnedCollider;
     private List<GameObject> ColliderList = new List<GameObject>();
     private Color32[] Initial;
     private bool debug = false;
 
-    private float colorfilter = 0.97f;
-    private float satfilter = 0.91f;
-    private float vibrancefilter = 0.2f;
+    private static float colorfilter = 0.97f;
+    private static float satfilter = 0.91f;
+    private static float vibrancefilter = 0.2f;
 
     private Mat gray;
 
@@ -40,29 +40,64 @@ public class CameraRead : MonoBehaviour
             debugMode(value);
         }
     }
-    public float Colorfilter { get => colorfilter; set => colorfilter = value; }
-    public float Satfilter { get => satfilter; set => satfilter = value; }
-    public float Vibrancefilter { get => vibrancefilter; set => vibrancefilter = value; }
-    public float Mint { get => mint; set => mint = value; }
-    public float Minarea { get => minarea; set => minarea = value; }
-    public float Maxarea { get => maxarea; set => maxarea = value; }
-    public float Edges { get => edges; set => edges = value; }
+    public static float Colorfilter { get => colorfilter; set => colorfilter = value; }
+    public static float Satfilter { get => satfilter; set => satfilter = value; }
+    public static float Vibrancefilter { get => vibrancefilter; set => vibrancefilter = value; }
+    public static float Mint { get => mint; set => mint = value; }
+    public static float Minarea { get => minarea; set => minarea = value; }
+    public static float Maxarea { get => maxarea; set => maxarea = value; }
+    public static float Edges { get => edges; set => edges = value; }
     private void Awake()
     {
         _controls = new Controlos();
         _controls.UI.Debug.Enable();
         _controls.UI.Debug.performed += Debug_performed;
+        LoadPrefs();
     }
 
     private void Debug_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
         DebugMode = !DebugMode;
+
     }
     private void OnDisable()
     {
 
         _controls.UI.Debug.performed -= Debug_performed;
         _controls.UI.Debug.Disable();
+
+
+    }
+
+
+
+    void Save()
+    {
+
+        Debug.Log(Colorfilter);
+        PlayerPrefs.SetFloat("sat", Satfilter);
+        PlayerPrefs.SetFloat("col", Colorfilter);
+        PlayerPrefs.SetFloat("vib", Vibrancefilter);
+        PlayerPrefs.SetFloat("bright", Mint);
+        PlayerPrefs.SetFloat("edges", Edges);
+        PlayerPrefs.SetFloat("MinArea", Minarea);
+        PlayerPrefs.SetFloat("MaxArea", Maxarea);
+        PlayerPrefs.Save();
+    }
+
+    void LoadPrefs()
+    {
+        if (PlayerPrefs.HasKey("sat"))
+        {
+            PlayerPrefs.GetFloat("sat", Satfilter);
+            Colorfilter = PlayerPrefs.GetFloat("col");
+            PlayerPrefs.GetFloat("vib", Vibrancefilter);
+            PlayerPrefs.GetFloat("bright", Mint);
+            PlayerPrefs.GetFloat("edges", Edges);
+            PlayerPrefs.GetFloat("MinArea", Minarea);
+            PlayerPrefs.GetFloat("MaxArea", Maxarea);
+        }
+
     }
 
     // Start is called before the first frame update
@@ -124,7 +159,11 @@ public class CameraRead : MonoBehaviour
             gameObject.transform.GetChild(i).gameObject.SetActive(debugnew);
 
         }
-        Debug.Log(gameObject.transform.childCount);
+        //Debug.Log(gameObject.transform.childCount);
+        if (debugnew == false)
+        {
+            Save();
+        }
     }
 
 
@@ -256,7 +295,7 @@ public class CameraRead : MonoBehaviour
         {
 
 
-         //   result.texture = frame;
+            //   result.texture = frame;
         }
     }
     float map(float s, float a1, float a2, float b1, float b2)

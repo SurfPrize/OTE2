@@ -32,11 +32,20 @@ public class MenuScript : MonoBehaviour
     }
     private void Pause_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
-        GameIsPaused = !GameIsPaused;
+
+
         if (GameIsPaused)
+        {
+            Debug.Log("resume");
             Resume();
+
+        }
         else
+        {
+            Debug.Log("Pause");
             Pause();
+
+        }
     }
 
     public void Resume()

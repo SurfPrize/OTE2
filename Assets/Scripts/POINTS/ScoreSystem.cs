@@ -9,7 +9,6 @@ public class ScoreSystem : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("OLA");
         //if (collision.gameObject.name == "Orange Butterfly(Clone)")
         //{
         //    Debug.Log("Detectei a borboleta");

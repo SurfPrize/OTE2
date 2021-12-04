@@ -12,10 +12,46 @@ using TMPro;
 
 public class mainMenu : MonoBehaviour
 {
-    private TMP_Text volumeTextValue = null;
-    private Slider volumeSlider = null;
-    private float defaultvolume = 1.0f;
+    [SerializeField] private TMP_Text volumeTextValue = null;
+    [SerializeField] private Slider volumeSlider = null;
+    [SerializeField] private float defaultvolume = 1.0f;
+
+    [SerializeField] private GameObject ConfirmationPrompt = null;
+
+    public Dropdrow resolutionDropdown;
+    private Resolution[] resolutions;
+
     // Start is called before the first frame update
+    private void start()
+    {
+        resolutions = screen.resutions;
+        resolutionDropdown.ClearOptions();
+
+        List<string> options = new List<string>();
+
+        int currentresolutionIndex = 0;
+
+        for (int i = 0; i < resolutions.Length; i++)
+        {
+            string option = resolutions[i].width + "x" + resolutions[i].height;
+            options.Add(option);
+
+            if (resolutions[i].width == Screen.width && resolutions[i].height == screen.height)
+            {
+
+                currentresolutionIndex = i;
+            }
+
+            resolutionDropdown.AddOptions(options);
+            resolutionDropdown.value = currentresolutionIndex;
+            resolutionDropdown.RefreshShowVAlue();
+        }
+        public void set resolution(int resolutionIndex)
+
+    {
+        resolution resolution = resolutions[resolutionIndex];
+        screen.SetResolution(resolution.width, resolution.height, screen.FullScreen);
+    }
     public void  PlayGame()
     {
       
@@ -28,12 +64,42 @@ public class mainMenu : MonoBehaviour
         Application.Quit();
     }
 
-    //public void reset(string Menu)
-    //{
+    public void Setvolume(float volume)
+    {
 
-    //    if (Menu == "Audio")
-    //    {
-    //        AudioListener.volume = defaultVolume;
-    //    }
-    //}
+
+        AudioListener.volume = volume;
+        volumeTextValue.text = volume.ToString("0.0");
+    }
+
+    public void volumeApply()
+    {
+
+        PlayerPrefs.SetFloat("Mastervolume ", AudioListener.volume);
+        StartCoroutine(ConfirmationBox());
+          
+    }
+    public void setFullscreen(bool isFullScreen)
+    {
+        _isFullScreen = isFullScreen; 
+
+    }
+    public void resetButton(string Menutype)
+    {
+
+        if (Menu == "Audio")
+        {
+            AudioListener.volume = defaultVolume;
+            volumeSlider.value = defaultvolume;
+            volumeTextValue.text = defaultvolume.ToString("0.0");
+            volumeApply();
+        }
+    }
+    public IEnumerator ConfirmationBox()
+    {
+        ConfirmationPrompt.SetActive(true);
+        yield return new WaitForSeconds(2);
+        ConfirmationPrompt.SetActive(false);
+    }
+   
 } 

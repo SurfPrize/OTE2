@@ -17,8 +17,8 @@ public class CameraRead : MonoBehaviour
     private WebCamDevice device;
     public bool webcamvalid = false;
     private float mint = 70;
-    private float edges = 8;
-    private float minarea = 10;
+    private float edges = 2;
+    private float minarea = 3;
     private float maxarea = 90;
     public GameObject SpawnedCollider;
     private List<GameObject> ColliderList = new List<GameObject>();
@@ -256,7 +256,7 @@ public class CameraRead : MonoBehaviour
         {
 
 
-            result.texture = frame;
+         //   result.texture = frame;
         }
     }
     float map(float s, float a1, float a2, float b1, float b2)

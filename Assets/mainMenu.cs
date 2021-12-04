@@ -18,13 +18,14 @@ public class mainMenu : MonoBehaviour
 
     [SerializeField] private GameObject ConfirmationPrompt = null;
 
-    public Dropdrow resolutionDropdown;
+    public Dropdown resolutionDropdown;
     private Resolution[] resolutions;
+    private bool _isFullScreen;
 
     // Start is called before the first frame update
-    private void start()
+    private void Start()
     {
-        resolutions = screen.resutions;
+        resolutions = Screen.resolutions;
         resolutionDropdown.ClearOptions();
 
         List<string> options = new List<string>();
@@ -36,7 +37,7 @@ public class mainMenu : MonoBehaviour
             string option = resolutions[i].width + "x" + resolutions[i].height;
             options.Add(option);
 
-            if (resolutions[i].width == Screen.width && resolutions[i].height == screen.height)
+            if (resolutions[i].width == Screen.width && resolutions[i].height == Screen.height)
             {
 
                 currentresolutionIndex = i;
@@ -44,17 +45,18 @@ public class mainMenu : MonoBehaviour
 
             resolutionDropdown.AddOptions(options);
             resolutionDropdown.value = currentresolutionIndex;
-            resolutionDropdown.RefreshShowVAlue();
+            resolutionDropdown.RefreshShownValue();
         }
-        public void set resolution(int resolutionIndex)
+    }
+    public void SetResolution(int resolutionIndex)
 
     {
-        resolution resolution = resolutions[resolutionIndex];
-        screen.SetResolution(resolution.width, resolution.height, screen.FullScreen);
+        Resolution resolution = resolutions[resolutionIndex];
+        Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
     }
-    public void  PlayGame()
+    public void PlayGame()
     {
-      
+
 
     }
 
@@ -77,19 +79,19 @@ public class mainMenu : MonoBehaviour
 
         PlayerPrefs.SetFloat("Mastervolume ", AudioListener.volume);
         StartCoroutine(ConfirmationBox());
-          
+
     }
     public void setFullscreen(bool isFullScreen)
     {
-        _isFullScreen = isFullScreen; 
+        _isFullScreen = isFullScreen;
 
     }
     public void resetButton(string Menutype)
     {
 
-        if (Menu == "Audio")
+        if (Menutype == "Audio")
         {
-            AudioListener.volume = defaultVolume;
+            AudioListener.volume = defaultvolume;
             volumeSlider.value = defaultvolume;
             volumeTextValue.text = defaultvolume.ToString("0.0");
             volumeApply();
@@ -101,5 +103,5 @@ public class mainMenu : MonoBehaviour
         yield return new WaitForSeconds(2);
         ConfirmationPrompt.SetActive(false);
     }
-   
-} 
+
+}

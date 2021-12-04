@@ -1353,7 +1353,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &437346352
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4592,10 +4592,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2991de71085e65044a5aeaf22797125a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  volumeTextValue: {fileID: 545037046}
-  volumeSlider: {fileID: 1708104086}
+  volumeTextValue: {fileID: 0}
+  volumeSlider: {fileID: 0}
   defaultvolume: 1
-  ConfirmationPrompt: {fileID: 1401167863}
+  ConfirmationPrompt: {fileID: 0}
+  resolutionDropdown: {fileID: 0}
 --- !u!4 &1401167865
 Transform:
   m_ObjectHideFlags: 0
@@ -4984,7 +4985,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1499850276
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5023,6 +5024,7 @@ MonoBehaviour:
   volumeSlider: {fileID: 0}
   defaultvolume: 1
   ConfirmationPrompt: {fileID: 0}
+  resolutionDropdown: {fileID: 0}
 --- !u!1 &1503463251
 GameObject:
   m_ObjectHideFlags: 0

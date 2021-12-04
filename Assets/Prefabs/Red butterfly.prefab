@@ -14,8 +14,7 @@ GameObject:
   - component: {fileID: 3150121609270861452}
   - component: {fileID: 3150121609270861490}
   - component: {fileID: 3150121609270861491}
-  - component: {fileID: 8333540543907038543}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Red butterfly
   m_TagString: Butterfly
   m_Icon: {fileID: 0}
@@ -125,6 +124,7 @@ MonoBehaviour:
   minReactionTime: 0.2
   flapWingTime: 1
   spawnDir: {x: 0, y: 0}
+  Tipo: 1
 --- !u!61 &3150121609270861490
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -172,15 +172,3 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &8333540543907038543
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3150121609270861448}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87b00794e2764c54eb884f63d393ccff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

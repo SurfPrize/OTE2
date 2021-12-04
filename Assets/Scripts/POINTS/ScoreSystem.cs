@@ -6,27 +6,39 @@ using TMPro;
 
 public class ScoreSystem : MonoBehaviour
 {
-    public int playerPoint = 0; 
-    public TMP_Text scorePoint;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.name == "Orange Butterfly(Clone)")
+        Debug.Log("OLA");
+        //if (collision.gameObject.name == "Orange Butterfly(Clone)")
+        //{
+        //    Debug.Log("Detectei a borboleta");
+        //    AddPoint(1);
+        //    scorePoint.text = "" + playerPoint;
+        //    DeleteButterfly();
+        //}
+        ButterflyBehaviour este = collision.gameObject.GetComponent<ButterflyBehaviour>();
+        if (este != null)
         {
-            Debug.Log("Detectei a borboleta");
-            AddPoint(1);
-            scorePoint.text = "" + playerPoint;
-            DeleteButterfly();
+            switch (este.Tipo)
+            {
+                case ButterflyType.ORANGE:
+                    Debug.Log("Detectei a borboleta");
+                    Score.AddPoint(1);
+                    DeleteButterfly(este.gameObject);
+                    break;
+                case ButterflyType.RED:
+                    break;
+                case ButterflyType.BLUE:
+                    break;
+            }
         }
-    }
-    public void AddPoint(int pontos)
-    {
-        playerPoint += pontos;
-        Debug.Log("Adicionei um ponto");
+
     }
 
-    public void DeleteButterfly()
+
+    public void DeleteButterfly(GameObject borboleta)
     {
-        //Destroy(gameObject);
+        Destroy(borboleta);
     }
 }

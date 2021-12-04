@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 381218310877387479}
   - component: {fileID: 381218310877387482}
   - component: {fileID: 381218310877387477}
-  m_Layer: 0
+  - component: {fileID: -361225953147325201}
+  m_Layer: 6
   m_Name: Player Hand
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -131,3 +132,15 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &-361225953147325201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 381218310877387478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1813ee42c95ca444d8da0448c93b2075, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

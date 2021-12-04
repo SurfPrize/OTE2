@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-enum States{
+enum States
+{
     Glide,
     FlapWings,
     OffCamera
@@ -23,9 +24,10 @@ public class ButterflyBehaviour : MonoBehaviour
     private Vector2 direction;
     private Animator animator;
     private SpriteRenderer spriteRenderer;
+    public ButterflyType Tipo = ButterflyType.ORANGE;
     void Start()
     {
-        timeForNextReaction = Random.Range(maxReactionTime,minReactionTime);
+        timeForNextReaction = Random.Range(maxReactionTime, minReactionTime);
         currentFlapWingTime = flapWingTime;
         //direction = Vector2.left;
         direction = spawnDir;
@@ -46,7 +48,7 @@ public class ButterflyBehaviour : MonoBehaviour
             case States.FlapWings:
                 //flap wings
                 animator.SetBool("IsWingFlapping", true);
-                
+
                 transform.Translate(Vector2.up * Time.deltaTime * upSpeed);
                 if (currentFlapWingTime > 0)
                 {
@@ -72,7 +74,8 @@ public class ButterflyBehaviour : MonoBehaviour
         {
             timeForNextReaction -= Time.deltaTime;
         }
-        else {
+        else
+        {
             OnCameraCheck();
             stateId = Random.Range(1, 3);
             switch (stateId)
@@ -92,14 +95,14 @@ public class ButterflyBehaviour : MonoBehaviour
     {
         if (Random.value < 0.5f)
         {
-            
+
             direction = Vector2.right;
             if (spriteRenderer.flipX)
                 spriteRenderer.flipX = false;
         }
         else
         {
-           
+
             direction = Vector2.left;
             if (!spriteRenderer.flipX)
                 spriteRenderer.flipX = true;
@@ -112,4 +115,13 @@ public class ButterflyBehaviour : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+
+}
+
+public enum ButterflyType
+{
+    ORANGE,
+    RED,
+    BLUE
 }

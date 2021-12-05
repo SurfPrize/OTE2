@@ -15,6 +15,7 @@ public class ScoreSystem : MonoBehaviour
     {
         audioSource = gameObject.GetComponent<AudioSource>();
     }
+    ////zéeeeeeeeeeeeeeeeeeeeeeeeeeeeee
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //if (collision.gameObject.name == "Orange Butterfly(Clone)")

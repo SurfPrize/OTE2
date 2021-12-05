@@ -18,7 +18,7 @@ public class mainMenu : MonoBehaviour
 
     [SerializeField] private GameObject ConfirmationPrompt = null;
 
-    public Dropdown resolutionDropdown;
+    public TMP_Dropdown resolutionDropdown;
     private Resolution[] resolutions;
     private bool _isFullScreen;
 
@@ -43,10 +43,10 @@ public class mainMenu : MonoBehaviour
                 currentresolutionIndex = i;
             }
 
-            resolutionDropdown.AddOptions(options);
-            resolutionDropdown.value = currentresolutionIndex;
-            resolutionDropdown.RefreshShownValue();
         }
+        resolutionDropdown.AddOptions(options);
+        resolutionDropdown.value = currentresolutionIndex;
+        resolutionDropdown.RefreshShownValue();
     }
     public void SetResolution(int resolutionIndex)
 

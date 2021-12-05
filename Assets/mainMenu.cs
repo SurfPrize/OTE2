@@ -22,6 +22,8 @@ public class mainMenu : MonoBehaviour
     private Resolution[] resolutions;
     private bool _isFullScreen;
 
+    public bool IsFullScreen { get => _isFullScreen; set => _isFullScreen = value; }
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -48,11 +50,16 @@ public class mainMenu : MonoBehaviour
         resolutionDropdown.value = currentresolutionIndex;
         resolutionDropdown.RefreshShownValue();
     }
-    public void SetResolution(int resolutionIndex)
+    public void SetResolution()
 
     {
-        Resolution resolution = resolutions[resolutionIndex];
+        Debug.Log(resolutions[resolutionDropdown.value]);
+        Resolution resolution = resolutions[resolutionDropdown.value];
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
+        if (IsFullScreen)
+            Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
+        else
+            Screen.fullScreenMode = FullScreenMode.Windowed;
     }
     public void PlayGame()
     {
@@ -83,7 +90,7 @@ public class mainMenu : MonoBehaviour
     }
     public void setFullscreen(bool isFullScreen)
     {
-        _isFullScreen = isFullScreen;
+        IsFullScreen = isFullScreen;
 
     }
     public void resetButton(string Menutype)

@@ -11,6 +11,8 @@ public class Score : MonoBehaviour
     private static GameObject GameOverText;
     private static int _hp = 10;
 
+    //zé
+
     [SerializeField] private TMP_Text scoreref;
     [SerializeField] private TMP_Text hpref;
     [SerializeField] private GameObject gameOverref;

@@ -24,6 +24,7 @@ public class CameraRead : MonoBehaviour
     private List<GameObject> ColliderList = new List<GameObject>();
     private Color32[] Initial;
     private bool debug = false;
+    public bool Menu = false;
 
     private static float colorfilter = 0.97f;
     private static float satfilter = 0.91f;
@@ -73,7 +74,7 @@ public class CameraRead : MonoBehaviour
 
 
 
-    void Save()
+    public void Save()
     {
 
         Debug.Log(Colorfilter);
@@ -87,7 +88,7 @@ public class CameraRead : MonoBehaviour
         PlayerPrefs.Save();
     }
 
-    void LoadPrefs()
+    public void LoadPrefs()
     {
         if (PlayerPrefs.HasKey("sat"))
         {
@@ -152,10 +153,11 @@ public class CameraRead : MonoBehaviour
         img.texture = webcam;
         webcam.Play();
         Initial = webcam.GetPixels32();
-        for (int i = 0; i < 20; i++)
-        {
-            ColliderList.Add(Instantiate(SpawnedCollider));
-        }
+        if (!Menu && ColliderList.Count == 0)
+            for (int i = 0; i < 20; i++)
+            {
+                ColliderList.Add(Instantiate(SpawnedCollider));
+            }
 
     }
 
@@ -249,10 +251,12 @@ public class CameraRead : MonoBehaviour
 
         //Mat contours = new Mat();
         //contours= Cv2.FindContoursAsMat(dil, RetrievalModes.List, ContourApproximationModes.ApproxSimple)[1];
-
-        for (int i = 0; i < ColliderList.Count; i++)
+        if (!Menu)
         {
-            ColliderList[i].SetActive(false);
+            for (int i = 0; i < ColliderList.Count; i++)
+            {
+                ColliderList[i].SetActive(false);
+            }
         }
         //for (int i = 0; i < contours.Length; i++)
         //{
@@ -285,9 +289,12 @@ public class CameraRead : MonoBehaviour
                     Vector2 res = new Vector2((float)(M.M10 / M.M00), (float)(M.M01 / M.M00));
 
                     res = new Vector2(map(res.x, 0, 640, -1000, 1000), map(res.y, 0, 480, -500, 500));
-                    ColliderList[i].SetActive(true);
-                    ColliderList[i].transform.position = res +
-                         (Vector2.one * Camera.main.transform.position);
+                    if (!Menu)
+                    {
+                        ColliderList[i].SetActive(true);
+                        ColliderList[i].transform.position = res +
+                             (Vector2.one * Camera.main.transform.position);
+                    }
                 }
             }
         }

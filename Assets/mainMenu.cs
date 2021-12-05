@@ -63,8 +63,7 @@ public class mainMenu : MonoBehaviour
     }
     public void PlayGame()
     {
-
-
+        SceneManager.LoadSceneAsync("Butterfly testing scene");
     }
 
     public void Exit()

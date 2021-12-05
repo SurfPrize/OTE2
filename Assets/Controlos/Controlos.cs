@@ -33,6 +33,14 @@ public class @Controlos : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Restart"",
+                    ""type"": ""Button"",
+                    ""id"": ""637e18d7-478b-47b5-8c55-bfb245704786"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -55,6 +63,17 @@ public class @Controlos : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": ""PC"",
                     ""action"": ""Debug"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fe9cc066-4565-455c-a933-92d63f06cd0e"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""Restart"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -84,6 +103,7 @@ public class @Controlos : IInputActionCollection, IDisposable
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Pause = m_UI.FindAction("Pause", throwIfNotFound: true);
         m_UI_Debug = m_UI.FindAction("Debug", throwIfNotFound: true);
+        m_UI_Restart = m_UI.FindAction("Restart", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -135,12 +155,14 @@ public class @Controlos : IInputActionCollection, IDisposable
     private IUIActions m_UIActionsCallbackInterface;
     private readonly InputAction m_UI_Pause;
     private readonly InputAction m_UI_Debug;
+    private readonly InputAction m_UI_Restart;
     public struct UIActions
     {
         private @Controlos m_Wrapper;
         public UIActions(@Controlos wrapper) { m_Wrapper = wrapper; }
         public InputAction @Pause => m_Wrapper.m_UI_Pause;
         public InputAction @Debug => m_Wrapper.m_UI_Debug;
+        public InputAction @Restart => m_Wrapper.m_UI_Restart;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -156,6 +178,9 @@ public class @Controlos : IInputActionCollection, IDisposable
                 @Debug.started -= m_Wrapper.m_UIActionsCallbackInterface.OnDebug;
                 @Debug.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnDebug;
                 @Debug.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnDebug;
+                @Restart.started -= m_Wrapper.m_UIActionsCallbackInterface.OnRestart;
+                @Restart.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnRestart;
+                @Restart.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnRestart;
             }
             m_Wrapper.m_UIActionsCallbackInterface = instance;
             if (instance != null)
@@ -166,6 +191,9 @@ public class @Controlos : IInputActionCollection, IDisposable
                 @Debug.started += instance.OnDebug;
                 @Debug.performed += instance.OnDebug;
                 @Debug.canceled += instance.OnDebug;
+                @Restart.started += instance.OnRestart;
+                @Restart.performed += instance.OnRestart;
+                @Restart.canceled += instance.OnRestart;
             }
         }
     }
@@ -183,5 +211,6 @@ public class @Controlos : IInputActionCollection, IDisposable
     {
         void OnPause(InputAction.CallbackContext context);
         void OnDebug(InputAction.CallbackContext context);
+        void OnRestart(InputAction.CallbackContext context);
     }
 }

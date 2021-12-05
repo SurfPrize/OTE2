@@ -20,6 +20,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "Restart",
+                    "type": "Button",
+                    "id": "637e18d7-478b-47b5-8c55-bfb245704786",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -42,6 +50,17 @@
                     "processors": "",
                     "groups": "PC",
                     "action": "Debug",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fe9cc066-4565-455c-a933-92d63f06cd0e",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PC",
+                    "action": "Restart",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

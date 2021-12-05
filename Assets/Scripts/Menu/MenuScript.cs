@@ -8,6 +8,7 @@ public class MenuScript : MonoBehaviour
     public static bool GameIsPaused = false;
     public GameObject menuDetection;
     private Controlos _controls;
+    [SerializeField] private GameObject textGameOver;
 
     //void Update()
     //{
@@ -23,17 +24,19 @@ public class MenuScript : MonoBehaviour
     {
         _controls = new Controlos();
         _controls.UI.Pause.Enable();
-        _controls.UI.Pause.performed += Pause_performed;
+        _controls.UI.Pause.performed += Pause_performed;        
+        _controls.UI.Restart.Enable();
+        _controls.UI.Restart.performed += Restart_performed;
     }
     private void OnDisable()
     {
         _controls.UI.Pause.performed -= Pause_performed;
-        _controls.UI.Pause.Disable();
+        _controls.UI.Pause.Disable();   
+        _controls.UI.Restart.performed -= Restart_performed;
+        _controls.UI.Restart.Disable();
     }
     private void Pause_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
-
-
         if (GameIsPaused)
         {
             Debug.Log("resume");
@@ -47,8 +50,12 @@ public class MenuScript : MonoBehaviour
 
         }
     }
-
-    public void Resume()
+    private void Restart_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        textGameOver.SetActive(false);
+        SceneManager.LoadScene("Butterfly testing scene");
+    }
+        public void Resume()
     {
         menuDetection.SetActive(false);
         Time.timeScale = 1f;

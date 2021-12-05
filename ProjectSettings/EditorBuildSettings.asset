@@ -8,8 +8,8 @@ EditorBuildSettings:
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
-  - enabled: 1
-    path: Assets/Scenes/Menu.unity
+  - enabled: 0
+    path: Assets/Scenes/menu.unity
     guid: 646add9735f03dd4cb4b693fe02e1930
   - enabled: 1
     path: Assets/Scenes/Butterfly testing scene.unity

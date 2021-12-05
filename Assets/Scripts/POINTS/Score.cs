@@ -8,10 +8,12 @@ public class Score : MonoBehaviour
     public static int playerPoint = 0;
     public static TMP_Text scorePoint;
     private static TMP_Text HPText;
+    private static GameObject GameOverText;
     private static int _hp = 10;
 
     [SerializeField] private TMP_Text scoreref;
     [SerializeField] private TMP_Text hpref;
+    [SerializeField] private GameObject gameOverref;
 
     public static int Hp
     {
@@ -29,6 +31,12 @@ public class Score : MonoBehaviour
     {
         scorePoint = scoreref;
         HPText = hpref;
+        GameOverText = gameOverref;
+    }
+    private void Update()
+    {
+        if (_hp < 0)
+            gameOverref.SetActive(true);
     }
     public static void AddPoint(int pontos)
     {

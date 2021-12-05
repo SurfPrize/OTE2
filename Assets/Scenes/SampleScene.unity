@@ -5071,7 +5071,7 @@ MonoBehaviour:
   volumeSlider: {fileID: 1708104086}
   defaultvolume: 1
   ConfirmationPrompt: {fileID: 546947953}
-  resolutionDropdown: {fileID: 0}
+  resolutionDropdown: {fileID: 1047457089}
 --- !u!4 &1401167865
 Transform:
   m_ObjectHideFlags: 0

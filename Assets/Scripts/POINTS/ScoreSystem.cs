@@ -8,6 +8,13 @@ public class ScoreSystem : MonoBehaviour
 {
     public int NormalScore = 1;
     public int BlueMultiplier = 10;
+    public AudioClip deathSound;
+    public GameObject audioSourceOrigin;
+    private AudioSource audioSource;
+    private void Start()
+    {
+        audioSource = gameObject.GetComponent<AudioSource>();
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //if (collision.gameObject.name == "Orange Butterfly(Clone)")
@@ -33,15 +40,19 @@ public class ScoreSystem : MonoBehaviour
                     break;
                 case ButterflyType.BLUE:
                     Score.AddPoint(NormalScore * BlueMultiplier);
+                    DeleteButterfly(este.gameObject);
                     break;
             }
         }
 
     }
-
-
     public void DeleteButterfly(GameObject borboleta)
     {
+        if (!audioSource.isPlaying)
+        {
+            audioSource.clip = deathSound;
+            audioSource.Play();
+        }
         Destroy(borboleta);
     }
 }

@@ -9,6 +9,8 @@ public class PlayerLives : MonoBehaviour
     public int playerHP = 10;
     public TMP_Text playerHP_text;
     public TMP_Text gameOver_text;
+
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
        // Debug.Log("Encontrado" + collision.gameObject.name);

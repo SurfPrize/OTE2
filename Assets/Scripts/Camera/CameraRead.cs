@@ -151,12 +151,6 @@ public class CameraRead : MonoBehaviour
         webcam = new WebCamTexture(640, 480, 60);
         img.texture = webcam;
         webcam.Play();
-
-        if (webcam.isPlaying)
-        {
-            Debug.Log("DEAD");
-        }
-
         Initial = webcam.GetPixels32();
         for (int i = 0; i < 20; i++)
         {

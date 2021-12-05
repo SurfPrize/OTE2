@@ -29,13 +29,15 @@ public class Score : MonoBehaviour
     // Start is called before the first frame update
     private void Awake()
     {
+        playerPoint = 0;
+        _hp = 10;
         scorePoint = scoreref;
         HPText = hpref;
         GameOverText = gameOverref;
     }
     private void Update()
     {
-        if (_hp < 0)
+        if (_hp <= 0)
             gameOverref.SetActive(true);
     }
     public static void AddPoint(int pontos)

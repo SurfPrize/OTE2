@@ -147,7 +147,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NormalScore: 1
   BlueMultiplier: 10
-  deathSound: {fileID: 8300000, guid: 6abe80ebeb31eea4fb74e5d6730998d7, type: 3}
+  deathSounds:
+  - {fileID: 8300000, guid: 6abe80ebeb31eea4fb74e5d6730998d7, type: 3}
+  - {fileID: 8300000, guid: 38c7e9601831b104a8a1fc370ebdbcf3, type: 3}
+  - {fileID: 8300000, guid: 98044d2774b40374699e55aa27507a75, type: 3}
   audioSourceOrigin: {fileID: 757611207702449728, guid: 7d6663f5ca7583e4fae9e96cda1e256b, type: 3}
 --- !u!82 &-3489807509720816271
 AudioSource:

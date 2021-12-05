@@ -53,6 +53,8 @@ public class CameraRead : MonoBehaviour
         _controls.UI.Debug.Enable();
         _controls.UI.Debug.performed += Debug_performed;
         LoadPrefs();
+
+
     }
 
     private void Debug_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
@@ -100,9 +102,11 @@ public class CameraRead : MonoBehaviour
 
     }
 
+
     // Start is called before the first frame update
     void Start()
     {
+
         webcam = new WebCamTexture();
 
         WebCamDevice[] devices = WebCamTexture.devices;
@@ -122,15 +126,23 @@ public class CameraRead : MonoBehaviour
 
         gray = new Mat();
         DebugMode = false;
+
         if (!debug)
         {
             StartCamera(devicesDropdown);
         }
     }
+    private void OnDestroy()
+    {
+        webcam.Stop();
+        webcam = null;
+    }
 
     public void StartCamera(Dropdown cameraoptions)
     {
-        webcam.Stop();
+        if (webcam.isPlaying)
+            webcam.Stop();
+
         string selectedCmera = cameraoptions.options[cameraoptions.value].text;
         Debug.Log(selectedCmera);
         webcamvalid = true;
@@ -139,6 +151,12 @@ public class CameraRead : MonoBehaviour
         webcam = new WebCamTexture(640, 480, 60);
         img.texture = webcam;
         webcam.Play();
+
+        if (webcam.isPlaying)
+        {
+            Debug.Log("DEAD");
+        }
+
         Initial = webcam.GetPixels32();
         for (int i = 0; i < 20; i++)
         {

@@ -1564,7 +1564,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   menuDetection: {fileID: 1292903848}
-  textGameOver: {fileID: 0}
+  textGameOver: {fileID: 1336119754}
 --- !u!1 &1336119754
 GameObject:
   m_ObjectHideFlags: 0

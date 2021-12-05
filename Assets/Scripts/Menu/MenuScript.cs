@@ -31,10 +31,17 @@ public class MenuScript : MonoBehaviour
     private void OnDisable()
     {
         _controls.UI.Pause.performed -= Pause_performed;
-        _controls.UI.Pause.Disable();   
+        _controls.UI.Pause.Disable();
         _controls.UI.Restart.performed -= Restart_performed;
         _controls.UI.Restart.Disable();
     }
+    private void Restart_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        textGameOver.SetActive(false);
+        SceneManager.LoadSceneAsync("Butterfly testing scene");
+    }
+
+   
     private void Pause_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
         if (GameIsPaused)
@@ -49,11 +56,6 @@ public class MenuScript : MonoBehaviour
             Pause();
 
         }
-    }
-    private void Restart_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
-    {
-        textGameOver.SetActive(false);
-        SceneManager.LoadScene("Butterfly testing scene");
     }
         public void Resume()
     {

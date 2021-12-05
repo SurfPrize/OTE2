@@ -1,19 +1,3 @@
-﻿
-namespace OpenCvSharp.ML
-{
-    /// <summary>
-    /// Sample types
-    /// </summary>
-    public enum SampleTypes : int
-    {
-        /// <summary>
-        /// each training sample is a row of samples
-        /// </summary>
-        RowSample = 0,
-
-        /// <summary>
-        /// each training sample occupies a column of samples
-        /// </summary>
-        ColSample = 1,
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:3ef5de587a0d27263f9f10f8920401d9ab7acf7a643063a59b67a4865ef92441
+size 408

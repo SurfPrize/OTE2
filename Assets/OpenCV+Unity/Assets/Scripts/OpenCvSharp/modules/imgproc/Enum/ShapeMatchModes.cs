@@ -1,30 +1,3 @@
-﻿
-namespace OpenCvSharp
-{
-#if LANG_JP
-    /// <summary>
-    /// cv::matchShapesで用いる比較手法
-    /// </summary>
-#else
-    /// <summary>
-    /// Comparison methods for cv::matchShapes
-    /// </summary>
-#endif
-    public enum ShapeMatchModes : int
-    {
-        /// <summary>
-        /// \f[I_1(A,B) =  \sum _{i=1...7}  \left |  \frac{1}{m^A_i} -  \frac{1}{m^B_i} \right |\f]
-        /// </summary>
-        I1 = 1,
-
-        /// <summary>
-        /// \f[I_2(A,B) =  \sum _{i=1...7}  \left | m^A_i - m^B_i  \right |\f]
-        /// </summary>
-        I2 = 2,
-
-        /// <summary>
-        /// \f[I_3(A,B) =  \max _{i=1...7}  \frac{ \left| m^A_i - m^B_i \right| }{ \left| m^A_i \right| }\f]
-        /// </summary>
-        I3 = 3,
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:f9882b31ace23277129a1837c7df1e91a2897d270782b45411e1386b195fc98c
+size 777

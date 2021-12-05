@@ -1,33 +1,3 @@
-﻿using System;
-
-namespace OpenCvSharp
-{
-    // ReSharper disable InconsistentNaming
-
-    /// <summary>
-    /// cv::AKAZE descriptor type
-    /// </summary>
-
-    public enum AKAZEDescriptorType : int
-    {
-        /// <summary>
-        /// Upright descriptors, not invariant to rotation
-        /// </summary>
-        KAZEUpright = 2, 
-        
-        /// <summary>
-        /// 
-        /// </summary>
-        KAZE = 3,
-
-        /// <summary>
-        /// 
-        /// </summary>
-        MLDBUpright = 4, 
-
-        /// <summary>
-        /// Upright descriptors, not invariant to rotation
-        /// </summary>
-        MLDB = 5
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:0dec5e1d9a679191d0e83a90f7d6dbb4e6135d51a4b1ec82c4b5a83ce7ac8c47
+size 670

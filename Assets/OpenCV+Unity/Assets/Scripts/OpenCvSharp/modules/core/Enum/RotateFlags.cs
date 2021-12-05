@@ -1,20 +1,3 @@
-﻿namespace OpenCvSharp
-{
-	public enum RotateFlags : int
-	{
-		/// <summary>
-		/// Rotate 90 degrees clockwise
-		/// </summary>
-		Rotate90Clockwise = 0,
-
-		/// <summary>
-		/// Rotate 180 degrees clockwise
-		/// </summary>
-		Rotate180 = 1,
-
-		/// <summary>
-		/// Rotate 270 degrees clockwise
-		/// </summary>
-		Rotate90CounterClockwise = 2
-	};
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:7273d3eb1b9b114eb747788942cb075ce6b7dc8a59d5333ab86086487a1eeb26
+size 365

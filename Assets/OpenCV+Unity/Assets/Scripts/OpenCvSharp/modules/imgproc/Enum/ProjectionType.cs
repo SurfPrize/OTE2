@@ -1,25 +1,3 @@
-﻿using System;
-
-namespace OpenCvSharp
-{
-    /// <summary>
-    /// cv::initWideAngleProjMap flags
-    /// </summary>
-    public enum ProjectionType : int
-    {
-        /// <summary>
-        /// 
-        /// </summary>
-        None = 0,
-
-        /// <summary>
-        /// 
-        /// </summary>
-        SphericalOrtho = 0,
-
-        /// <summary>
-        /// 
-        /// </summary>
-        SphericalEqRect = 1,
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:daa0cba14e632c145a14d1e4027f4b46dc3c467b14bd5f1b35f024e0195424ac
+size 445

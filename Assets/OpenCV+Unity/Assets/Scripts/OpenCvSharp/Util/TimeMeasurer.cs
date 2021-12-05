@@ -1,29 +1,3 @@
-﻿using System;
-using System.Diagnostics;
-
-namespace OpenCvSharp.Util
-{
-    /// <summary>
-    /// Substitute of System.Action
-    /// </summary>
-    public delegate void Action();
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public static class TimeMeasurer
-    {
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="action"></param>
-        /// <returns></returns>
-        public static TimeSpan Measure(Action action)
-        {
-            Stopwatch watch = Stopwatch.StartNew();
-            action();
-            watch.Stop();
-            return watch.Elapsed;
-        }
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:5b3026f7ca9f85b6def48e47fe91db76353dc4d383a78a27bb27f1ccbb9d740d
+size 648

@@ -1,26 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
-namespace OpenCvSharp
-{
-    /// <summary>
-    /// Method for solving a PnP problem:
-    /// </summary>
-    [Flags]
-    public enum FindCirclesGridFlags : int
-    {
-        /// <summary>
-        /// uses symmetric pattern of circles.
-        /// </summary>
-        SymmetricGrid = 1,
-
-        /// <summary>
-        /// uses asymmetric pattern of circles.
-        /// </summary>
-        AsymmetricGrid = 2,
-
-        /// <summary>
-        /// uses a special algorithm for grid detection. It is more robust to perspective distortions but much more sensitive to background clutter.
-        /// </summary>
-        Clustering = 4,
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:3f2e2554ce61a2b436d05c8f089cb2ca63435070dbf5f6d56408ea5cbdc2f13a
+size 709

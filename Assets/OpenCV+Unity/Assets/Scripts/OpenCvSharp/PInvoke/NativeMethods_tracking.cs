@@ -1,28 +1,3 @@
-﻿using System;
-using System.Runtime.InteropServices;
-
-#pragma warning disable 1591
-
-namespace OpenCvSharp
-{
-    static partial class NativeMethods
-    {
-
-        [DllImport(DllExtern, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern IntPtr tracking_Tracker_create(string trackerType);
-
-        [DllImport(DllExtern, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool tracking_Tracker_init(IntPtr obj, IntPtr image, Rect2d boundingBox);
-
-        [DllImport(DllExtern, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool tracking_Tracker_update(IntPtr obj, IntPtr image, ref Rect2d boundingBox);
-
-        [DllImport(DllExtern, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern void tracking_Ptr_Tracker_delete(IntPtr ptr);
-
-        [DllImport(DllExtern, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern IntPtr tracking_Ptr_Tracker_get(IntPtr ptr);
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:c0bb14a72e0099bd202a6d34dcf95dc09e4b2abebcd66ca3162ac337ab8cd0e7
+size 1222

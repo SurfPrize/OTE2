@@ -1,29 +1,3 @@
-﻿using System;
-using System.Runtime.InteropServices;
-
-#pragma warning disable 1591
-
-namespace OpenCvSharp
-{
-    static partial class NativeMethods
-    {
-        // ReSharper disable InconsistentNaming
-
-        // BRISK
-        [DllImport(DllExtern, CallingConvention = CallingConvention.Cdecl)]
-        public static extern IntPtr features2d_BRISK_create1(int thresh, int octaves, float patternScale);
-        [DllImport(DllExtern, CallingConvention = CallingConvention.Cdecl)]
-        public static extern IntPtr features2d_BRISK_create2(
-            float[] radiusList, int radiusListLength, int[] numberList, int numberListLength,
-            float dMax, float dMin,
-            int[] indexChange, int indexChangeLength);
-        
-        [DllImport(DllExtern, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void features2d_Ptr_BRISK_delete(IntPtr ptr);
-        [DllImport(DllExtern, CallingConvention = CallingConvention.Cdecl)]
-        public static extern IntPtr features2d_Ptr_BRISK_get(IntPtr ptr);
-		//EX
-        //[DllImport(DllExtern, CallingConvention = CallingConvention.Cdecl)]
-        //public static extern IntPtr features2d_BRISK_info(IntPtr obj);
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:070d4c5d27706c83a7ab1d2bf9edb7e48428cda9bcdfff18c274e4083ce2b940
+size 1230

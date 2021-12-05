@@ -1,18 +1,3 @@
-﻿using System;
-
-namespace OpenCvSharp
-{
-    // ReSharper disable InconsistentNaming
-#pragma warning disable 1591
-
-    /// <summary>
-    /// AGAST type one of the four neighborhoods as defined in the paper
-    /// </summary>
-    public enum AGASTType : int
-    {
-        AGAST_5_8 = 0, 
-        AGAST_7_12d = 1, 
-        AGAST_7_12s = 2,
-        OAST_9_16 = 3,
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:c1194be45989b3f1d1728f65256b41c9dbc51997aa772b5b5b2683586b54ec47
+size 388

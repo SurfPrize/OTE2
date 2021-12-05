@@ -1,36 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using System.Text;
-using OpenCvSharp;
-
-namespace OpenCvSharp
-{
-    /// <summary>
-    /// Proxy datatype for passing Mat's and vector&lt;&gt;'s as input parameters.
-    /// Synonym for OutputArray.
-    /// </summary>
-    public class InputOutputArray : OutputArray
-    {
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="mat"></param>
-        internal InputOutputArray(Mat mat)
-            : base(mat)
-        {
-        }
-
-        #region Cast
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="mat"></param>
-        /// <returns></returns>
-        public static implicit operator InputOutputArray(Mat mat)
-        {
-            return new InputOutputArray(mat);
-        }
-        #endregion
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:74361387fe56b2389a6c4489d060c2b571ba0bbbe55f64a98846d8a0a6c2f82c
+size 889

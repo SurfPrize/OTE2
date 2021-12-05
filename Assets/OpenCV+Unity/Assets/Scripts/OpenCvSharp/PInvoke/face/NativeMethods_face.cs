@@ -1,25 +1,3 @@
-﻿
-using System;
-using System.Runtime.InteropServices;
-
-#pragma warning disable 1591
-
-namespace OpenCvSharp
-{
-    // ReSharper disable InconsistentNaming
-
-    static partial class NativeMethods
-    {
-        [DllImport(DllExtern, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern IntPtr face_createEigenFaceRecognizer(
-            int numComponents, double threshold);
-
-        [DllImport(DllExtern, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern IntPtr face_createFisherFaceRecognizer(
-            int numComponents, double threshold);
-
-        [DllImport(DllExtern, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern IntPtr face_createLBPHFaceRecognizer(
-            int radius, int neighbors, int gridX, int gridY, double threshold);
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:c68388c16c4692c36623155cf0d3df1f7977d0198ecab80d1c9b1ee68048d12a
+size 912

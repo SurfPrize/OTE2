@@ -1,22 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace OpenCvSharp
-{
-    internal static class PlatformUtil
-    {
-        public static long AlignSize(long sz, int n)
-        {
-            return (sz + n - 1) & -n;
-        }
-
-        public static long TruncateForX86(long value)
-        {
-            if (IntPtr.Size == 4)
-                return (long)((int)value);
-            else
-                return value;
-        }
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:2524a8a0aea9f8048734a467a4d2af8f103d96fb3d99010270b9e7f6fc0868f7
+size 480

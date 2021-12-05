@@ -1,31 +1,3 @@
-﻿using System;
-
-namespace OpenCvSharp
-{
-    /// <summary>
-    /// cv::KAZE diffusivity type
-    /// </summary>
-// ReSharper disable once InconsistentNaming
-    public enum KAZEDiffusivity : int
-    {
-        /// <summary>
-        /// 
-        /// </summary>
-        DiffPmG1 = 0,
-
-        /// <summary>
-        /// 
-        /// </summary>
-        DiffPmG2 = 1,
-
-        /// <summary>
-        /// 
-        /// </summary>
-        DiffWeickert = 2,
-
-        /// <summary>
-        /// 
-        /// </summary>
-        DiffCharbonnier = 3,
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:f1a4bd899b524499acc47d442294c4efec200a7d4c9975dac26f8283c759ca8b
+size 575

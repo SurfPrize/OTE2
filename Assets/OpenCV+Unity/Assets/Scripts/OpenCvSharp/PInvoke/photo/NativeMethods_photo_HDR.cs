@@ -1,33 +1,3 @@
-﻿using System;
-using System.Runtime.InteropServices;
-
-#pragma warning disable 1591
-// ReSharper disable InconsistentNaming
-
-namespace OpenCvSharp
-{
-    static partial class NativeMethods
-    {
-        [DllImport(DllExtern, CallingConvention = CallingConvention.Cdecl)]
-        public static extern IntPtr photo_createCalibrateDebevec(int samples, float lambda, int random);
-
-        [DllImport(DllExtern, CallingConvention = CallingConvention.Cdecl)]
-        public static extern IntPtr photo_createCalibrateRobertson(int maxIter, float threshold);
-
-        [DllImport(DllExtern, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void photo_Ptr_CalibrateDebevec_delete(IntPtr obj);
-
-        [DllImport(DllExtern, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void photo_Ptr_CalibrateRobertson_delete(IntPtr obj);
-
-        [DllImport(DllExtern, CallingConvention = CallingConvention.Cdecl)]
-        public static extern IntPtr photo_Ptr_CalibrateDebevec_get(IntPtr obj);
-
-        [DllImport(DllExtern, CallingConvention = CallingConvention.Cdecl)]
-        public static extern IntPtr photo_Ptr_CalibrateRobertson_get(IntPtr obj);
-
-        [DllImport(DllExtern, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void photo_CalibrateCRF_process(
-            IntPtr obj, IntPtr[] srcImgs, int srcImgsLength, IntPtr dst, [In, MarshalAs(UnmanagedType.LPArray)] float[] times);
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:ec703cf86422903f56cee6be3de9b0ea6f341a377fa96d8671756bf8ccf55e90
+size 1491

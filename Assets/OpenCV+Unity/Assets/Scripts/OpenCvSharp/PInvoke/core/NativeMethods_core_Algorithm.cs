@@ -1,27 +1,3 @@
-﻿using System;
-using System.Runtime.InteropServices;
-using System.Text;
-
-#pragma warning disable 1591
-
-namespace OpenCvSharp
-{
-    static partial class NativeMethods
-    {
-        [DllImport(DllExtern, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void core_Algorithm_write(IntPtr obj, IntPtr fs);
-
-        [DllImport(DllExtern, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void core_Algorithm_read(IntPtr obj, IntPtr fn);
-
-        [DllImport(DllExtern, CallingConvention = CallingConvention.Cdecl)]
-        public static extern int core_Algorithm_empty(IntPtr obj);
-
-        [DllImport(DllExtern, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void core_Algorithm_save(IntPtr obj, string filename);
-
-        [DllImport(DllExtern, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void core_Algorithm_getDefaultName(
-            IntPtr obj, [MarshalAs(UnmanagedType.LPStr)] StringBuilder buf, int bufLength);
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:ff017b45862081c62c1b4e11761d5f15a016a06b739ecda18b041d324f2434b2
+size 1056

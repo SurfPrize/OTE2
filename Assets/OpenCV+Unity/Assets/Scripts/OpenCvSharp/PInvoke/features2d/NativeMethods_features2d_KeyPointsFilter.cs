@@ -1,32 +1,3 @@
-﻿using System;
-using System.Runtime.InteropServices;
-
-#pragma warning disable 1591
-
-namespace OpenCvSharp
-{
-    static partial class NativeMethods
-    {
-        // ReSharper disable InconsistentNaming
-
-        [DllImport(DllExtern, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void features2d_KeyPointsFilter_runByImageBorder(
-            IntPtr keypoints, Size imageSize, int borderSize);
-
-        [DllImport(DllExtern, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void features2d_KeyPointsFilter_runByKeypointSize(
-            IntPtr keypoints, float minSize, float maxSize);
-
-        [DllImport(DllExtern, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void features2d_KeyPointsFilter_runByPixelsMask(
-            IntPtr keypoints, IntPtr mask);
-
-        [DllImport(DllExtern, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void features2d_KeyPointsFilter_removeDuplicated(
-            IntPtr keypoints);
-
-        [DllImport(DllExtern, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void features2d_KeyPointsFilter_retainBest(
-            IntPtr keypoints, int npoints);
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:711f9e8b5754dbd084554734b6a7c2483252a76d6472ac8290fc90f00ccb4cde
+size 1258

@@ -1,24 +1,3 @@
-﻿namespace OpenCvSharp
-{
-    /// <summary>
-    /// Variants of Line Segment %Detector
-    /// </summary>
-    public enum LineSegmentDetectorModes : int
-    {
-        /// <summary>
-        /// No refinement applied
-        /// </summary>
-        RefineNone = 0, 
-        
-        /// <summary>
-        /// Standard refinement is applied. E.g. breaking arches into smaller straighter line approximations.
-        /// </summary>
-        RefineStd = 1, 
-        
-        /// <summary>
-        /// Advanced refinement. Number of false alarms is calculated, lines are
-        /// refined through increase of precision, decrement in size, etc.
-        /// </summary>
-        RefineAdv = 2,
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:a812d5259da4efe6211b677de995e02562e261466359746dd81a1f6f3edaec97
+size 717

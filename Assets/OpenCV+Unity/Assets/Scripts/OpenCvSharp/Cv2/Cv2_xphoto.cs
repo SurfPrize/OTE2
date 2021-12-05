@@ -1,21 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
-using OpenCvSharp.Util;
-
-namespace OpenCvSharp
-{
-    static partial class Cv2
-    {
-        public static void BalanceWhite(InputArray src, OutputArray dst)
-        {
-            if (src == null)
-                throw new ArgumentNullException("Cv2.BalanceWhite: source Mat is null");
-            if (dst == null)
-                throw new ArgumentNullException("Cv2.BalanceWhite: destination Mat is null");
-            src.ThrowIfDisposed();
-            dst.ThrowIfDisposed();
-
-            NativeMethods.xphoto_balanceWhite(src.CvPtr, dst.CvPtr);
-        }
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:b76af2f175007eeb0e67de19613902ee7f05897864b1f8d5f357565f519658eb
+size 638

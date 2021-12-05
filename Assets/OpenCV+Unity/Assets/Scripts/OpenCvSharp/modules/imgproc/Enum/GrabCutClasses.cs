@@ -1,28 +1,3 @@
-﻿namespace OpenCvSharp
-{
-    /// <summary>
-    /// class of the pixel in GrabCut algorithm
-    /// </summary>
-    public enum GrabCutClasses 
-    {
-        /// <summary>
-        /// an obvious background pixels
-        /// </summary>
-        BGD = 0,  
-
-        /// <summary>
-        /// an obvious foreground (object) pixel
-        /// </summary>
-        FGD = 1,  
-
-        /// <summary>
-        /// a possible background pixel
-        /// </summary>
-        PR_BGD = 2, 
-
-        /// <summary>
-        /// a possible foreground pixel
-        /// </summary>
-        PR_FGD = 3   
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:a04a59400561c53d755125925e89e63784cdad61d75871a8df565aa864ede942
+size 620

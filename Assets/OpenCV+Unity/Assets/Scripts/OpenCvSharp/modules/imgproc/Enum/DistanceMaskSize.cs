@@ -1,32 +1,3 @@
-﻿using System;
-
-namespace OpenCvSharp
-{
-#if LANG_JP
-    /// <summary>
-    /// 距離変換 (distance transform) のマスクサイズ
-    /// </summary>
-#else
-    /// <summary>
-    /// Mask size for distance transform
-    /// </summary>
-#endif
-    [Flags]
-    public enum DistanceMaskSize : int
-    {
-        /// <summary>
-        /// 3
-        /// </summary>
-        Mask3 = 3,
-
-        /// <summary>
-        /// 5
-        /// </summary>
-        Mask5 = 5,
-
-        /// <summary>
-        /// 
-        /// </summary>
-        Precise = 0,
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:bf1cd229454d7c1d42e86d1c12510e524df41a113999ae7a84530a292f33a067
+size 580

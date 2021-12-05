@@ -1,17 +1,3 @@
-﻿using System;
-
-namespace OpenCvSharp
-{
-    // ReSharper disable InconsistentNaming
-#pragma warning disable 1591
-
-    /// <summary>
-    /// AGAST type one of the four neighborhoods as defined in the paper
-    /// </summary>
-    public enum FASTType : int
-    {
-        TYPE_5_8 = 0, 
-        TYPE_7_12 = 1,
-        TYPE_9_16 = 2,
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:acfd1de8e3146fe95f18cf38f99e8390daa67f5e364418133024b4d12427b135
+size 357

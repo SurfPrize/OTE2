@@ -1,33 +1,3 @@
-﻿namespace OpenCvSharp.Demo
-{
-	using UnityEngine;
-	using System.Collections;
-	using OpenCvSharp;
-	using UnityEngine.UI;
-
-	public class GrayscaleScript : MonoBehaviour {
-
-		public Texture2D texture;
-
-		// Use this for initialization
-		void Start () {
-
-			Mat mat = Unity.TextureToMat (this.texture);
-			Mat grayMat = new Mat ();
-			Cv2.CvtColor (mat, grayMat, ColorConversionCodes.BGR2GRAY); 
-			Texture2D texture = Unity.MatToTexture (grayMat);
-
-			RawImage rawImage = gameObject.GetComponent<RawImage> ();
-			rawImage.texture = texture;
-	//		Renderer renderer = gameObject.GetComponent<Renderer> ();
-	//		renderer.material.mainTexture = texture;
-		}
-
-		// Update is called once per frame
-		void Update () {
-
-		}
-
-
-	}
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:3bd71762b60b09c48f3c5d99c5cd937d3dd566ad19b0d7795b9f2d231cd064f7
+size 753

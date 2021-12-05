@@ -1,35 +1,3 @@
-﻿
-namespace OpenCvSharp
-{
-#if LANG_JP
-	/// <summary>
-	/// ウィンドウのプロパティを取得・設定する際のプロパティID(cvGetWindowProperty/cvSetWindowProperty)
-	/// </summary>
-#else
-    /// <summary>
-    /// Property identifiers for cvGetWindowProperty/cvSetWindowProperty
-    /// </summary>
-#endif
-    public enum WindowProperty : int
-    {
-        /// <summary>
-        /// fullscreen property (can be WINDOW_NORMAL or WINDOW_FULLSCREEN)
-        /// </summary>
-        Fullscreen = 0,
-
-        /// <summary>
-        /// autosize property (can be WINDOW_NORMAL or WINDOW_AUTOSIZE)
-        /// </summary>
-        AutoSize = 1,
-        
-        /// <summary>
-        /// window's aspect ration (can be set to WINDOW_FREERATIO or WINDOW_KEEPRATIO)
-        /// </summary>
-        AspectRatio = 2,
-
-        /// <summary>
-        /// opengl support
-        /// </summary>
-        OpenGL = 3,
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:eee1debb3019d7c79e372b07852dbb9b5684749754ae28dab1de9ca4a064b2d4
+size 952

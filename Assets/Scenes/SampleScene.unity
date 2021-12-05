@@ -7374,11 +7374,15 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
 <<<<<<< HEAD
+<<<<<<< HEAD
 <<<<<<< Updated upstream
   m_AnchoredPosition: {x: -72.22834, y: 206.00003}
 =======
   m_AnchoredPosition: {x: -9.1, y: 206.9}
 >>>>>>> Stashed changes
+=======
+  m_AnchoredPosition: {x: -2.9483643, y: 206.00003}
+>>>>>>> parent of a52d0ea (menu)
 =======
   m_AnchoredPosition: {x: -2.9483643, y: 206.00003}
 >>>>>>> parent of a52d0ea (menu)
